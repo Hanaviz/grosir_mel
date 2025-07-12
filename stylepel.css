@@ -1,0 +1,289 @@
+/* --- Global Styles & Resets --- */
+:root {
+    --primary-color: #4a90e2; /* Biru sejuk */
+    --secondary-color: #f5f7fa; /* Abu-abu muda untuk background */
+    --dark-color: #333;
+    --light-color: #fff;
+    --text-color: #555;
+    --success-color: #50e3c2; /* Hijau toska */
+    --danger-color: #e35050;  /* Merah */
+    --edit-color: #f8b44e;    /* Kuning */
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --border-radius: 8px;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  body {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    display: flex; /* Menggunakan flexbox untuk layout utama */
+  }
+  
+  /* --- Sidebar --- */
+  .sidebar {
+    width: 250px;
+    background-color: #2d3250;
+    color: var(--light-color);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; /* Mencegah sidebar menyusut */
+    min-height: 100vh;
+  }
+  
+  .sidebar-header {
+    padding: 25px 20px;
+    text-align: center;
+    border-bottom: 1px solid #444;
+  }
+  
+  .sidebar-header h1 {
+    font-weight: 600;
+    font-size: 24px;
+  }
+  
+  .sidebar-menu {
+    list-style: none;
+    flex-grow: 1;
+    margin-top: 20px;
+  }
+  
+  .sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: #ccc;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: 500;
+    margin: 5px 10px;
+    border-radius: var(--border-radius);
+  }
+  
+  .sidebar-menu li a i {
+    margin-right: 15px;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+  }
+  
+  .sidebar-menu li a:hover,
+  .sidebar-menu li.active a {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+  }
+  
+  /* --- Main Content --- */
+  .main-content {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto; /* Jika konten lebih panjang dari layar */
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  
+  .header .header-title {
+    color: var(--dark-color);
+    font-weight: 600;
+    font-size: 28px;
+  }
+  
+  h2 {
+      margin-bottom: 20px;
+      color: var(--dark-color);
+      font-weight: 600;
+  }
+  
+  /* --- Table Styles --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--light-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  
+  table thead tr {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  table th, table td {
+    padding: 15px 20px;
+    vertical-align: middle;
+  }
+  
+  table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  table tbody tr:last-of-type {
+    border-bottom: none;
+  }
+  
+  table tbody tr:hover {
+    background-color: #e9eff5;
+  }
+  
+  /* --- Button Styles --- */
+  button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+    color: var(--light-color);
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+  }
+  
+  td button.edit, td a .hapus {
+      margin-bottom: 5px;
+  }
+  
+  .action-buttons {
+      text-align: right; 
+      margin-top: 20px;
+  }
+  
+  button.tambah { background-color: var(--success-color); }
+  button.tambah:hover { background-color: #40c3b2; }
+  
+  button.edit { background-color: var(--edit-color); }
+  button.edit:hover { background-color: #e8a43e; }
+  
+  button.hapus { background-color: var(--danger-color); }
+  button.hapus:hover { background-color: #d34040; }
+  
+  button.simpan { background-color: var(--primary-color); width: 100%; padding: 12px; font-size: 16px; }
+  button.simpan:hover { background-color: #3a80d2; }
+  
+  button.logout { background-color: #6c757d; } /* Abu-abu netral */
+  button.logout:hover { background-color: #5a6268; }
+  
+  td a {
+      text-decoration: none;
+  }
+  
+  /* --- Modal Styles --- */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 500px;
+    padding: 25px 30px;
+    position: relative;
+    animation: slide-down 0.4s ease;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close-button:hover,
+  .close-button:focus {
+    color: var(--dark-color);
+  }
+  
+  .modal-content h2 {
+    margin-bottom: 25px;
+    text-align: center;
+  }
+  
+  /* --- Form Styles in Modal (Generic for all forms) --- */
+  .modal-content form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  
+  .modal-content form input[type="text"],
+  .modal-content form input[type="number"],
+  .modal-content form textarea,
+  .modal-content form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .modal-content form select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 40px; /* Space for arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%23555%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 10px;
+  }
+  
+  
+  .modal-content form input:focus,
+  .modal-content form textarea:focus,
+  .modal-content form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  }
+  
+  .modal-actions {
+    margin-top: 10px;
+  }
+  
+  
+  /* --- Animation --- */
+  @keyframes slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+  }
