@@ -1,15 +1,29 @@
 /* --- Global Styles & Resets --- */
+html, body { /* Added for full viewport height */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
-  --primary-color: #4a90e2; /* Biru yang sejuk */
-  --secondary-color: #f5f7fa; /* Abu-abu muda untuk background */
-  --dark-color: #333;
-  --light-color: #fff;
-  --text-color: #555;
-  --success-color: #50e3c2; /* Hijau toska */
-  --danger-color: #e35050; /* Merah */
-  --edit-color: #f8b44e; /* Kuning */
-  --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  --border-radius: 8px;
+  --primary-gradient: linear-gradient(to right, #38496E, #4A608F); /* Deep professional blue gradient */
+  --primary-gradient-hover: linear-gradient(to right, #2D3A55, #38496E); /* Darker gradient for hover */
+  --secondary-color: #F8F9FA; /* Very light grey background */
+  --dark-color: #343A40; /* Darker text/heading color */
+  --light-color: #FFFFFF; /* Pure white */
+  --text-color: #6C757D; /* Softer grey for body text */
+  --success-color: #28A745; /* Standard green */
+  --danger-color: #DC3545; /* Standard red */
+  --edit-color: #FFC107; /* Standard yellow/orange */
+  --info-color: #17A2B8; /* New: for details/info like print button */
+
+  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1); /* Slightly more prominent */
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15); /* For modals */
+
+  --border-radius-sm: 5px;
+  --border-radius-md: 10px; /* Slightly larger default */
+  --border-radius-lg: 15px; /* For larger elements */
 }
 
 * {
@@ -32,59 +46,73 @@ body {
 
 .sidebar {
   width: 250px;
-  background-color: #2d3250;
+  background: var(--primary-gradient); /* Applied gradient */
   color: var(--light-color);
   display: flex;
   flex-direction: column;
   transition: width 0.3s ease;
+  box-shadow: var(--shadow-md);
+  position: fixed; /* Sidebar remains fixed */
+  top: 0; /* Aligns to the top */
+  left: 0; /* Aligns to the left */
+  height: 100vh; /* PERBAIKAN: Memastikan sidebar memiliki tinggi penuh */
+  z-index: 100; /* Ensure it stays on top of other content */
 }
 
 .sidebar-header {
   padding: 25px 20px;
   text-align: center;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-header h1 {
-  font-weight: 600;
-  font-size: 24px;
+  font-weight: 700;
+  font-size: 26px;
 }
 
 .sidebar-menu {
   list-style: none;
   flex-grow: 1;
   margin-top: 20px;
+  padding-bottom: 20px; /* PERBAIKAN: Menambahkan padding bottom untuk ruang */
 }
 
 .sidebar-menu li a {
   display: flex;
   align-items: center;
   padding: 15px 25px;
-  color: #ccc;
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
   font-weight: 500;
+  margin: 5px 10px;
+  border-radius: var(--border-radius-sm);
 }
 
 .sidebar-menu li a i {
   margin-right: 15px;
-  font-size: 18px;
+  font-size: 19px;
   width: 20px;
   text-align: center;
 }
 
-.sidebar-menu li a:hover,
-.sidebar-menu li.active a {
-  background-color: var(--primary-color);
+.sidebar-menu li a:hover {
+  background: var(--primary-gradient-hover); /* Applied gradient hover */
   color: var(--light-color);
-  border-radius: 5px;
-  margin: 0 10px;
-  padding: 15px 15px;
+  transform: translateX(5px);
+}
+
+.sidebar-menu li.active a {
+  background-color: var(--light-color);
+  color: #38496E; /* Specific color from gradient start */
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
 }
 
 .main-content {
   flex-grow: 1;
   padding: 30px;
+  margin-left: 250px; /* Offset for the fixed sidebar */
 }
 
 header {
@@ -92,19 +120,22 @@ header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #E0E0E0;
 }
 
 header h2 {
   color: var(--dark-color);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 30px;
 }
 
 /* --- Table Styles --- */
 .content-table {
   background: var(--light-color);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  overflow: hidden; /* Penting untuk border-radius pada tabel */
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
 }
 
 table {
@@ -113,7 +144,7 @@ table {
 }
 
 table thead tr {
-  background-color: var(--primary-color);
+  background: var(--primary-gradient); /* Applied gradient */
   color: var(--light-color);
   text-align: left;
   font-weight: 600;
@@ -121,7 +152,7 @@ table thead tr {
 
 table th,
 table td {
-  padding: 15px 20px;
+  padding: 18px 20px;
 }
 
 table tbody tr {
@@ -129,7 +160,7 @@ table tbody tr {
 }
 
 table tbody tr:nth-of-type(even) {
-  background-color: #f9f9f9;
+  background-color: #FDFDFD;
 }
 
 table tbody tr:last-of-type {
@@ -137,50 +168,51 @@ table tbody tr:last-of-type {
 }
 
 table tbody tr:hover {
-  background-color: #e9eff5;
+  background-color: #EBF2F7;
 }
 
 /* --- Button Styles --- */
 .btn {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  color: var(--light-color);
 }
 
 .btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
+  background: var(--primary-gradient); /* Applied gradient */
   color: var(--light-color);
 }
 .btn-primary:hover {
-  background-color: #3a80d2;
+  background: var(--primary-gradient-hover); /* Applied gradient hover */
 }
 
 .btn-edit {
   background-color: var(--edit-color);
-  color: var(--light-color);
+  color: var(--dark-color);
 }
 .btn-edit:hover {
-  background-color: #e8a43e;
+  background-color: #E0A800;
 }
 
 .btn-danger {
   background-color: var(--danger-color);
-  color: var(--light-color);
 }
 .btn-danger:hover {
-  background-color: #d34040;
+  background-color: #C82333;
 }
 
 .btn-success {
@@ -188,7 +220,7 @@ table tbody tr:hover {
   color: var(--light-color);
 }
 .btn-success:hover {
-  background-color: #40c3b2;
+  background-color: #218838;
 }
 
 .action-cell {
@@ -206,38 +238,298 @@ table tbody tr:hover {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   justify-content: center;
   align-items: center;
+  animation: fadeIn 0.3s ease-out;
 }
 
+/* Enhanced modal content */
 .modal-content {
-  background-color: #fff;
-  border-radius: var(--border-radius);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
   width: 90%;
   max-width: 500px;
-  animation: slide-down 0.4s ease;
+  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
 }
 
-.modal-header {
+/* Modal header with gradient background */
+.modal-content h2 {
+  background: var(--primary-gradient);
+  color: white;
+  margin: 0;
+  padding: 25px 30px;
+  font-size: 22px;
+  font-weight: 600;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid #eee;
+  gap: 12px;
+  border-radius: 20px 20px 0 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.modal-header h2 {
-  font-size: 20px;
+.modal-content h2 i {
+  font-size: 24px;
+  opacity: 0.9;
+}
+
+/* Enhanced close button */
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.close-button:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+/* Form styling inside modal */
+.modal-content form {
+  padding: 30px;
+}
+
+.modal-content label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 12px;
   color: var(--dark-color);
+  font-size: 16px;
+}
+
+.modal-content select {
+  width: 100%;
+  padding: 15px 18px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 16px;
+  background: white;
+  color: var(--dark-color);
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 20px;
+  cursor: pointer;
+}
+
+.modal-content select:focus {
+  outline: none;
+  border-color: #4A608F;
+  box-shadow: 0 0 0 4px rgba(74, 96, 143, 0.15);
+  transform: translateY(-2px);
+}
+
+.modal-content select:hover {
+  border-color: #6c757d;
+}
+
+/* Enhanced modal actions */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #e9ecef;
+}
+
+.modal-actions .btn {
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}
+
+.modal-actions .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-actions .btn-success {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  border: none;
+  color: white;
+}
+
+.modal-actions .btn-success:hover {
+  background: linear-gradient(135deg, #218838 0%, #1aa179 100%);
+}
+
+/* Different styling for penjualan modal */
+#penjualanModal .modal-content h2 {
+  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+}
+
+#penjualanModal .modal-actions .btn {
+  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+  color: white;
+}
+
+#penjualanModal .modal-actions .btn:hover {
+  background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Loading state for buttons */
+.modal-actions .btn.loading {
+  position: relative;
+  color: transparent;
+}
+
+.modal-actions .btn.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Select option styling */
+.modal-content select option {
+  padding: 10px;
+  font-size: 15px;
+}
+
+.modal-content select option:hover {
+  background-color: #f8f9fa;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-width: none;
+    margin: 10px;
+    border-radius: 15px;
+  }
+  
+  .modal-content h2 {
+    padding: 20px 25px;
+    font-size: 20px;
+  }
+  
+  .modal-content form {
+    padding: 25px 20px;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .modal-actions .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* Enhanced focus states for accessibility */
+.modal-content select:focus-visible {
+  outline: 2px solid #4A608F;
+  outline-offset: 2px;
+}
+
+.modal-actions .btn:focus-visible {
+  outline: 2px solid #4A608F;
+  outline-offset: 2px;
+}
+
+/* Subtle pattern overlay */
+.modal-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f8f9fa' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='1.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+  pointer-events: none;
+  border-radius: 20px;
+  z-index: 1;
+}
+
+.modal-content > * {
+  position: relative;
+  z-index: 2;
 }
 
 .close-button {
-  color: #aaa;
-  font-size: 28px;
+  color: #999;
+  font-size: 34px;
   font-weight: bold;
   cursor: pointer;
+  transition: color 0.3s ease;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 .close-button:hover,
@@ -246,164 +538,172 @@ table tbody tr:hover {
 }
 
 .modal-body {
-  padding: 20px;
+  padding: 0;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .form-group label {
   display: block;
   font-weight: 600;
-  margin-bottom: 8px;
-  font-size: 14px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: var(--dark-color);
 }
 
 .form-group input[type="text"],
 .form-group input[type="tel"],
 .form-group textarea {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
+  padding: 13px;
+  border: 1px solid #DEDEDE;
+  border-radius: var(--border-radius-sm);
+  font-size: 15px;
   transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: #FDFDFD;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  border-color: #38496E; /* Specific color from gradient start */
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.25);
 }
 
 .modal-footer {
-  padding: 20px;
+  padding-top: 20px;
+  margin-top: 15px;
   text-align: right;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #E0E0E0;
 }
 
 @keyframes slide-down {
   from {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(-50px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
-} /* CSS from distributor.php */
-.btn-success {
-  background-color: var(--success-color);
-  color: var(--light-color);
 }
-.btn-success:hover {
-  background-color: #40c3b2;
-}
+
+/* CSS from distributor.php (incorporated and adjusted) */
 .table-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 #searchInput {
   width: 300px;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
+  padding: 12px 15px;
+  border: 1px solid #DEDEDE;
+  border-radius: var(--border-radius-sm);
+  font-size: 15px;
+  box-shadow: var(--shadow-sm);
 }
+#searchInput:focus { outline: none; border-color: #38496E; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); }
 .pagination-container {
   display: flex;
-  gap: 5px;
+  gap: 8px;
 }
 .page-btn {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  color: var(--primary-color);
+  padding: 9px 15px;
+  border: 1px solid #DEDEDE;
+  background-color: var(--light-color);
+  color: #38496E;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
+  border-radius: var(--border-radius-sm);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  font-weight: 600;
 }
-.page-btn:hover {
-  background-color: #f0f0f0;
+.page-btn:hover:not(:disabled) {
+  background-color: #EBF2F7;
+  border-color: #4A608F;
 }
 .page-btn.active {
-  background-color: var(--primary-color);
-  color: #fff;
-  border-color: var(--primary-color);
+  background: var(--primary-gradient); /* Applied gradient */
+  color: var(--light-color);
+  border-color: #38496E;
 }
 .page-btn:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+  background-color: #E9ECEF;
+  color: #ADB5BD;
 }
 .no-data-row {
   text-align: center;
   font-style: italic;
   color: var(--text-color);
-} /* Existing styles */
+  padding: 20px !important;
+}
+
+/* Existing styles for Home.php */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 25px;
-  margin-bottom: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 35px;
 }
 .stat-card {
   background-color: var(--light-color);
-  padding: 25px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
+  padding: 28px;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
   display: flex;
   align-items: center;
   gap: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
 }
 .stat-card .icon {
-  font-size: 32px;
-  padding: 15px;
-  border-radius: 50%;
+  font-size: 36px;
+  padding: 18px;
+  border-radius: var(--border-radius-sm);
   color: var(--light-color);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .stat-card .icon.barang {
-  background-color: #f8b44e;
-} /* Kuning */
+  background-color: var(--edit-color);
+}
 .stat-card .icon.pelanggan {
-  background-color: #50e3c2;
-} /* Hijau Toska */
+  background-color: var(--success-color);
+}
 .stat-card .icon.distributor {
-  background-color: #4a90e2;
-} /* Biru */
+  background: var(--primary-gradient); /* Applied gradient */
+}
 .stat-card .icon.transaksi {
-  background-color: #e35050;
-} /* Merah */
+  background-color: var(--danger-color);
+}
 
 .stat-card-info h3 {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 700;
   color: var(--dark-color);
   margin: 0;
 }
 .stat-card-info p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-color);
   margin: 0;
 }
 .content-header {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   color: var(--dark-color);
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: 24px;
 }
 .header-actions button {
   margin-left: 10px;
@@ -411,157 +711,64 @@ table tbody tr:hover {
 /* Style for History section */
 .history-section {
   background-color: var(--light-color);
-  padding: 25px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  margin-top: 30px;
+  padding: 30px;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  margin-top: 35px;
 }
 .history-section h3 {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   color: var(--dark-color);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 22px;
 }
 .filter-form {
   display: flex;
   gap: 15px;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   flex-wrap: wrap;
 }
 .filter-form label {
   font-weight: 500;
   color: var(--dark-color);
+  font-size: 15px;
 }
 .filter-form input[type="radio"] {
-  margin-right: 5px;
+  margin-right: 8px;
+  transform: scale(1.2);
 }
 .filter-form input[type="date"],
 .filter-form input[type="month"],
 .filter-form input[type="number"],
 .filter-form button {
-  padding: 8px 12px;
+  padding: 10px 15px;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
+  border-radius: var(--border-radius-sm);
+  font-size: 15px;
+  background-color: #FDFDFD;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.filter-form input:focus, .filter-form button:focus {
+    outline: none;
+    border-color: #38496E;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
 }
 .filter-form button {
-  background-color: var(--primary-color);
+  background: var(--primary-gradient); /* Applied gradient */
   color: var(--light-color);
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
 }
 .filter-form button:hover {
-  background-color: #3a80d2;
+  background: var(--primary-gradient-hover); /* Applied gradient hover */
+  transform: translateY(-2px);
 }
 .history-summary {
-  font-size: 18px;
-  font-weight: 600;
-  text-align: right;
-  margin-top: 20px;
-  color: var(--dark-color);
-}
-
-/* NEW STYLES FOR MODAL */
-.modal-content {
-  background-color: #fff;
-  border-radius: var(--border-radius);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); /* Stronger shadow */
-  width: 90%;
-  max-width: 450px; /* Slightly smaller */
-  padding: 30px; /* More padding */
-  position: relative;
-  animation: slide-down 0.4s ease-out; /* Smoother animation */
-  overflow: hidden; /* Ensure rounded corners apply */
-}
-
-.modal-content h2 {
-  font-size: 24px;
+  font-size: 19px;
   font-weight: 700;
+  text-align: right;
+  margin-top: 25px;
   color: var(--dark-color);
-  margin-bottom: 25px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px; /* Gap between icon and text */
-}
-
-.modal-content .close-button {
-  top: 15px;
-  right: 20px;
-  font-size: 32px; /* Larger close button */
-  color: #aaa;
-  transition: color 0.3s ease;
-}
-.modal-content .close-button:hover {
-  color: var(--danger-color); /* Red on hover */
-}
-
-.modal-content label {
-  font-weight: 600;
-  color: var(--text-color);
-  margin-bottom: 10px; /* More space */
-  font-size: 15px;
-}
-
-.modal-content select {
-  width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px; /* More rounded */
-  font-size: 16px;
-  margin-bottom: 25px; /* More space */
-  background-color: #f9f9f9; /* Light background */
-  transition: border-color 0.3s, box-shadow 0.3s;
-  -webkit-appearance: none; /* Remove default arrow */
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%23555%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-  background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 12px;
-  cursor: pointer;
-}
-
-.modal-content select:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.3);
-}
-
-.modal-actions {
-  margin-top: 15px;
-  text-align: center;
-}
-
-.modal-actions .btn {
-  width: 100%;
-  padding: 14px 20px;
-  font-size: 18px;
-  font-weight: 600;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.modal-actions .btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Specific button colors for modals */
-#pemasukanModal .btn-success {
-  background-color: var(--success-color);
-}
-#pemasukanModal .btn-success:hover {
-  background-color: #40c3b2;
-}
-
-#penjualanModal .btn {
-  /* Overriding the general .btn style for this specific modal */
-  background-color: #9b59b6; /* Purple */
-  color: white;
-}
-#penjualanModal .btn:hover {
-  background-color: #8e44ad; /* Darker purple */
 }

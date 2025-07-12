@@ -1,184 +1,245 @@
 /* --- Global Styles & Resets --- */
+html, body { /* Added for full viewport height */
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 :root {
-    --primary-color: #4a90e2; /* Biru sejuk */
-    --secondary-color: #f5f7fa; /* Abu-abu muda untuk background */
-    --dark-color: #333;
-    --light-color: #fff;
-    --text-color: #555;
-    --success-color: #50e3c2; /* Hijau toska */
-    --danger-color: #e35050;  /* Merah */
-    --edit-color: #f8b44e;    /* Kuning */
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    --border-radius: 8px;
-  }
-  
-  * {
+    --primary-gradient: linear-gradient(to right, #38496E, #4A608F); /* Deep professional blue gradient */
+    --primary-gradient-hover: linear-gradient(to right, #2D3A55, #38496E); /* Darker gradient for hover */
+    --secondary-color: #F8F9FA; /* Very light grey background */
+    --dark-color: #343A40; /* Darker text/heading color */
+    --light-color: #FFFFFF; /* Pure white */
+    --text-color: #6C757D; /* Softer grey for body text */
+    --success-color: #28A745; /* Standard green */
+    --danger-color: #DC3545; /* Standard red */
+    --edit-color: #FFC107; /* Standard yellow/orange */
+    --info-color: #17A2B8; /* New: for details/info like print button */
+
+    --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1); /* Slightly more prominent */
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15); /* For modals */
+
+    --border-radius-sm: 5px;
+    --border-radius-md: 10px; /* Slightly larger default */
+    --border-radius-lg: 15px; /* For larger elements */
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-  }
-  
-  body {
+}
+
+body {
     background-color: var(--secondary-color);
     color: var(--text-color);
-    display: flex; /* Menggunakan flexbox untuk layout utama */
-  }
-  
-  /* --- Sidebar --- */
-  .sidebar {
+    display: flex;
+}
+
+/* --- Sidebar --- */
+.sidebar {
     width: 250px;
-    background-color: #2d3250;
+    background: var(--primary-gradient); /* Applied gradient */
     color: var(--light-color);
     display: flex;
     flex-direction: column;
-    flex-shrink: 0; /* Mencegah sidebar menyusut */
+    flex-shrink: 0;
     min-height: 100vh;
-  }
-  
-  .sidebar-header {
+    box-shadow: var(--shadow-md);
+    position: fixed; /* Sidebar remains fixed */
+    top: 0; /* Aligns to the top */
+    left: 0; /* Aligns to the left */
+    z-index: 100; /* Ensure it stays on top of other content */
+}
+
+.sidebar-header {
     padding: 25px 20px;
     text-align: center;
-    border-bottom: 1px solid #444;
-  }
-  
-  .sidebar-header h1 {
-    font-weight: 600;
-    font-size: 24px;
-  }
-  
-  .sidebar-menu {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h1 {
+    font-weight: 700;
+    font-size: 26px;
+}
+
+.sidebar-menu {
     list-style: none;
     flex-grow: 1;
     margin-top: 20px;
-  }
-  
-  .sidebar-menu li a {
+}
+
+.sidebar-menu li a {
     display: flex;
     align-items: center;
     padding: 15px 25px;
-    color: #ccc;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
     font-weight: 500;
     margin: 5px 10px;
-    border-radius: var(--border-radius);
-  }
-  
-  .sidebar-menu li a i {
+    border-radius: var(--border-radius-sm);
+}
+
+.sidebar-menu li a i {
     margin-right: 15px;
-    font-size: 18px;
+    font-size: 19px;
     width: 20px;
     text-align: center;
-  }
-  
-  .sidebar-menu li a:hover,
-  .sidebar-menu li.active a {
-    background-color: var(--primary-color);
+}
+
+.sidebar-menu li a:hover {
+    background: var(--primary-gradient-hover); /* Applied gradient hover */
     color: var(--light-color);
-  }
-  
-  /* --- Main Content --- */
-  .main-content {
+    transform: translateX(5px);
+}
+
+.sidebar-menu li.active a {
+    background-color: var(--light-color);
+    color: #38496E; /* Specific color from gradient start */
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+}
+
+/* --- Main Content --- */
+.main-content {
     flex-grow: 1;
     padding: 30px;
-    overflow-y: auto; /* Jika konten lebih panjang dari layar */
-  }
-  
-  .header {
+    overflow-y: auto;
+    margin-left: 250px; /* Offset for the fixed sidebar */
+}
+
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-  }
-  
-  .header .header-title {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.header .header-title {
     color: var(--dark-color);
-    font-weight: 600;
-    font-size: 28px;
-  }
-  
-  h2 {
-      margin-bottom: 20px;
-      color: var(--dark-color);
-      font-weight: 600;
-  }
-  
-  /* --- Table Styles --- */
-  table {
+    font-weight: 700;
+    font-size: 30px;
+}
+
+h2 {
+    margin-bottom: 25px;
+    color: var(--dark-color);
+    font-weight: 700;
+    font-size: 24px;
+}
+
+/* --- Table Styles --- */
+table {
     width: 100%;
     border-collapse: collapse;
     background: var(--light-color);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
     overflow: hidden;
-  }
-  
-  table thead tr {
-    background-color: var(--primary-color);
+}
+
+table thead tr {
+    background: var(--primary-gradient); /* Applied gradient */
     color: var(--light-color);
     text-align: left;
     font-weight: 600;
-  }
-  
-  table th, table td {
-    padding: 15px 20px;
-  }
-  
-  table tbody tr {
-    border-bottom: 1px solid #f0f0f0;
-  }
-  
-  table tbody tr:last-of-type {
+}
+
+table th, table td {
+    padding: 18px 20px;
+    vertical-align: middle;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #E0E0E0;
+}
+
+table tbody tr:last-of-type {
     border-bottom: none;
-  }
-  
-  table tbody tr:hover {
-    background-color: #e9eff5;
-  }
-  
-  /* --- Button Styles --- */
-  button {
-    padding: 8px 15px;
+}
+
+table tbody tr:hover {
+    background-color: #EBF2F7;
+}
+
+/* --- Button Styles --- */
+button, .btn {
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.3s, transform 0.2s;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     color: var(--light-color);
-  }
-  
-  button:hover {
-    transform: translateY(-2px);
-  }
-  
-  .action-buttons {
-      text-align: right; 
-      margin-top: 20px;
-  }
-  
-  button.tambah { background-color: var(--success-color); }
-  button.tambah:hover { background-color: #40c3b2; }
-  
-  button.edit { background-color: var(--edit-color); }
-  button.edit:hover { background-color: #e8a43e; }
-  
-  button.hapus { background-color: var(--danger-color); }
-  button.hapus:hover { background-color: #d34040; }
-  
-  button.simpan { background-color: var(--primary-color); width: 100%; padding: 12px; font-size: 16px; }
-  button.simpan:hover { background-color: #3a80d2; }
-  
-  button.logout { background-color: #6c757d; } /* Abu-abu netral */
-  button.logout:hover { background-color: #5a6268; }
-  
-  td a {
-      text-decoration: none;
-  }
-  
-  /* --- Modal Styles --- */
-  .modal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button:hover, .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+}
+
+.action-buttons {
+    text-align: right;
+    margin-top: 20px;
+}
+
+button.tambah, .btn-success {
+    background-color: var(--success-color);
+}
+button.tambah:hover, .btn-success:hover {
+    background-color: #218838;
+}
+
+button.edit, .btn-edit {
+    background-color: var(--edit-color);
+    color: var(--dark-color);
+}
+button.edit:hover, .btn-edit:hover {
+    background-color: #E0A800;
+}
+
+button.hapus, .btn-danger {
+    background-color: var(--danger-color);
+}
+button.hapus:hover, .btn-danger:hover {
+    background-color: #C82333;
+}
+
+button.simpan, .btn-primary {
+    background: var(--primary-gradient); /* Applied gradient */
+    width: 100%;
+    padding: 14px;
+    font-size: 17px;
+}
+button.simpan:hover, .btn-primary:hover {
+    background: var(--primary-gradient-hover); /* Applied gradient hover */
+}
+
+button.logout {
+    background-color: #6C757D;
+}
+button.logout:hover {
+    background-color: #5A6268;
+}
+
+td a button {
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* --- Modal Styles --- */
+.modal {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -187,100 +248,119 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     justify-content: center;
     align-items: center;
-  }
-  
-  .modal-content {
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.modal-content {
+    background-color: var(--light-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
     width: 90%;
-    max-width: 500px;
-    padding: 25px 30px;
+    max-width: 550px;
+    padding: 35px 40px;
     position: relative;
-    animation: slide-down 0.4s ease;
-  }
-  
-  .close-button {
+    animation: slide-down 0.5s ease-out;
+}
+
+.close-button {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    color: #aaa;
-    font-size: 28px;
+    top: 20px;
+    right: 20px;
+    color: #999;
+    font-size: 34px;
     font-weight: bold;
     cursor: pointer;
-  }
-  
-  .close-button:hover,
-  .close-button:focus {
+    transition: color 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
     color: var(--dark-color);
-  }
-  
-  .modal-content h2 {
-    margin-bottom: 25px;
+}
+
+.modal-content h2 {
+    margin-bottom: 30px;
     text-align: center;
-  }
-  
-  /* --- Form Styles in Modal --- */
-  #barangForm label {
+    color: var(--dark-color);
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* --- Form Styles in Modal (Generic for all forms) --- */
+.modal-content form label {
     display: block;
     font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-  
-  #barangForm input[type="text"],
-  #barangForm input[type="number"] {
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: var(--dark-color);
+}
+
+.modal-content form input[type="text"],
+.modal-content form input[type="number"],
+.modal-content form textarea,
+.modal-content form select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-bottom: 20px;
+    padding: 13px;
+    border: 1px solid #DEDEDE;
+    border-radius: var(--border-radius-sm);
+    font-size: 15px;
+    margin-bottom: 25px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #FDFDFD;
     transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  
-  #barangForm input:focus {
+}
+
+.modal-content form select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%23555%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+}
+
+.modal-content form input:focus,
+.modal-content form textarea:focus,
+.modal-content form select:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-  }
-  
-  .modal-actions {
-    margin-top: 10px;
-  }
-  
-  
-  /* --- Animation --- */
-  @keyframes slide-down {
+    border-color: #38496E; /* Specific color from gradient start */
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.25);
+}
+
+.modal-actions {
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* --- Animation --- */
+@keyframes slide-down {
     from {
         opacity: 0;
-        transform: translateY(-30px);
+        transform: translateY(-50px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
     }
-  }/* CSS from d_transaksi.php */
-.alert-box { padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: var(--border-radius); font-weight: 500; }
-.alert-box.danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
-
-/* NEW STYLES FOR MODAL IN D_TRANSAKSI.PHP */
-.modal-content {
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25); /* Stronger shadow */
-    width: 90%;
-    max-width: 450px; /* Slightly smaller */
-    padding: 30px; /* More padding */
-    position: relative;
-    animation: slide-down 0.4s ease-out; /* Smoother animation */
-    overflow: hidden; /* Ensure rounded corners apply */
 }
 
-.modal-content h2 {
+/* CSS from d_transaksi.php (incorporated and adjusted) */
+.alert-box { padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: var(--border-radius-sm); font-weight: 500; }
+.alert-box.danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+
+.modal-content.d_transaksi {
+    box-shadow: var(--shadow-lg);
+    max-width: 480px;
+    padding: 30px;
+}
+
+.modal-content.d_transaksi h2 {
     font-size: 24px;
     font-weight: 700;
     color: var(--dark-color);
@@ -289,90 +369,79 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Gap between icon and text */
+    gap: 10px;
 }
 
-.modal-content .close-button {
+.modal-content.d_transaksi .close-button {
     top: 15px;
     right: 20px;
-    font-size: 32px; /* Larger close button */
+    font-size: 32px;
     color: #aaa;
     transition: color 0.3s ease;
 }
-.modal-content .close-button:hover {
-    color: var(--danger-color); /* Red on hover */
+.modal-content.d_transaksi .close-button:hover {
+    color: var(--danger-color);
 }
 
-.modal-content label {
+.modal-content.d_transaksi label {
     font-weight: 600;
     color: var(--text-color);
-    margin-bottom: 10px; /* More space */
+    margin-bottom: 10px;
     font-size: 15px;
 }
 
-.modal-content select,
-.modal-content input[type="number"] {
-    width: 100%;
+.modal-content.d_transaksi select,
+.modal-content.d_transaksi input[type="number"] {
     padding: 12px 15px;
     border: 1px solid #ccc;
-    border-radius: 8px; /* More rounded */
+    border-radius: var(--border-radius-sm);
     font-size: 16px;
-    margin-bottom: 25px; /* More space */
-    background-color: #f9f9f9; /* Light background */
+    margin-bottom: 25px;
+    background-color: #f9f9f9;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.modal-content select {
-    -webkit-appearance: none; /* Remove default arrow */
-    -moz-appearance: none;
-    appearance: none;
+.modal-content.d_transaksi select {
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%23555%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 12px;
-    cursor: pointer;
 }
 
-.modal-content select:focus,
-.modal-content input[type="number"]:focus {
-    outline: none;
-    border-color: var(--primary-color);
+.modal-content.d_transaksi select:focus,
+.modal-content.d_transaksi input[type="number"]:focus {
+    border-color: #38496E;
     box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.3);
 }
 
-.modal-actions {
+.modal-actions.d_transaksi {
     margin-top: 15px;
     text-align: center;
 }
 
-.modal-actions .simpan {
-    width: 100%;
+.modal-actions.d_transaksi .simpan {
     padding: 14px 20px;
     font-size: 18px;
     font-weight: 600;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-sm);
 }
 
-.modal-actions .simpan:hover {
+.modal-actions.d_transaksi .simpan:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-}/* CSS from transaksi.php */
-.table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-#searchInput { width: 300px; padding: 10px 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
-.pagination-container { display: flex; gap: 5px; }
-.page-btn { padding: 8px 12px; border: 1px solid #ddd; background-color: #fff; color: var(--primary-color); cursor: pointer; border-radius: 5px; }
-.page-btn.active { background-color: var(--primary-color); color: #fff; }
-.page-btn:disabled { cursor: not-allowed; opacity: 0.6; }
-.no-data-row { text-align: center; font-style: italic; }
+    box-shadow: var(--shadow-md);
+}
+
+/* CSS from transaksi.php (incorporated and adjusted) */
+.table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+#searchInput { width: 300px; padding: 12px 15px; border: 1px solid #DEDEDE; border-radius: var(--border-radius-sm); font-size: 15px; box-shadow: var(--shadow-sm); }
+#searchInput:focus { outline: none; border-color: #38496E; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); }
+.pagination-container { display: flex; gap: 8px; }
+.page-btn { padding: 9px 15px; border: 1px solid #DEDEDE; background-color: var(--light-color); color: #38496E; cursor: pointer; border-radius: var(--border-radius-sm); font-weight: 600; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
+.page-btn.active { background: var(--primary-gradient); color: var(--light-color); border-color: #38496E; }
+.page-btn:disabled { cursor: not-allowed; opacity: 0.6; background-color: #E9ECEF; color: #ADB5BD; }
+.page-btn:hover:not(:disabled) { background-color: #EBF2F7; border-color: #4A608F; }
+.no-data-row { text-align: center; font-style: italic; color: var(--text-color); padding: 20px !important; }
 .tipe-masuk { color: var(--success-color); font-weight: bold; }
-.tipe-keluar { color: var(--danger-color); font-weight: bold; }/* CSS from barang.php */
-.table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-#searchInput { width: 300px; padding: 10px 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
-.pagination-container { display: flex; gap: 5px; }
-.page-btn { padding: 8px 12px; border: 1px solid #ddd; background-color: #fff; color: var(--primary-color); cursor: pointer; border-radius: 5px; }
-.page-btn:hover { background-color: #f0f0f0; }
-.page-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
-.page-btn:disabled { cursor: not-allowed; opacity: 0.6; }
-.no-data-row { text-align: center; font-style: italic; color: var(--text-color); }
+.tipe-keluar { color: var(--danger-color); font-weight: bold; }
+
+/* CSS from barang.php (incorporated and adjusted) */

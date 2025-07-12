@@ -1,187 +1,223 @@
 /* --- Global Styles & Resets --- */
 :root {
-    --primary-color: #4a90e2; /* Biru sejuk */
-    --secondary-color: #f5f7fa; /* Abu-abu muda untuk background */
-    --dark-color: #333;
-    --light-color: #fff;
-    --text-color: #555;
-    --success-color: #50e3c2; /* Hijau toska */
-    --danger-color: #e35050;  /* Merah */
-    --edit-color: #f8b44e;    /* Kuning */
-    --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    --border-radius: 8px;
+    --primary-gradient: linear-gradient(to right, #38496E, #4A608F); /* Deep professional blue gradient */
+    --primary-gradient-hover: linear-gradient(to right, #2D3A55, #38496E); /* Darker gradient for hover */
+    --secondary-color: #F8F9FA; /* Very light grey background */
+    --dark-color: #343A40; /* Darker text/heading color */
+    --light-color: #FFFFFF; /* Pure white */
+    --text-color: #6C757D; /* Softer grey for body text */
+    --success-color: #28A745; /* Standard green */
+    --danger-color: #DC3545; /* Standard red */
+    --edit-color: #FFC107; /* Standard yellow/orange */
+    --info-color: #17A2B8; /* New: for details/info like print button */
+
+    --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1); /* Slightly more prominent */
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15); /* For modals */
+
+    --border-radius-sm: 5px;
+    --border-radius-md: 10px; /* Slightly larger default */
+    --border-radius-lg: 15px; /* For larger elements */
   }
-  
+
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
   }
-  
+
   body {
     background-color: var(--secondary-color);
     color: var(--text-color);
-    display: flex; /* Menggunakan flexbox untuk layout utama */
+    display: flex;
   }
-  
+
   /* --- Sidebar --- */
   .sidebar {
     width: 250px;
-    background-color: #2d3250;
+    background: var(--primary-gradient); /* Applied gradient */
     color: var(--light-color);
     display: flex;
     flex-direction: column;
-    flex-shrink: 0; /* Mencegah sidebar menyusut */
+    flex-shrink: 0;
     min-height: 100vh;
+    box-shadow: var(--shadow-md);
+    position: fixed; /* Added: Sidebar remains fixed */
+    top: 0; /* Added: Aligns to the top */
+    left: 0; /* Added: Aligns to the left */
+    z-index: 100; /* Ensure it stays on top of other content */
   }
-  
+
   .sidebar-header {
     padding: 25px 20px;
     text-align: center;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .sidebar-header h1 {
-    font-weight: 600;
-    font-size: 24px;
+    font-weight: 700;
+    font-size: 26px;
   }
-  
+
   .sidebar-menu {
     list-style: none;
     flex-grow: 1;
     margin-top: 20px;
   }
-  
+
   .sidebar-menu li a {
     display: flex;
     align-items: center;
     padding: 15px 25px;
-    color: #ccc;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
     font-weight: 500;
     margin: 5px 10px;
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-sm);
   }
-  
+
   .sidebar-menu li a i {
     margin-right: 15px;
-    font-size: 18px;
+    font-size: 19px;
     width: 20px;
     text-align: center;
   }
-  
-  .sidebar-menu li a:hover,
-  .sidebar-menu li.active a {
-    background-color: var(--primary-color);
+
+  .sidebar-menu li a:hover {
+    background: var(--primary-gradient-hover); /* Applied gradient hover */
     color: var(--light-color);
+    transform: translateX(5px);
   }
-  
+
+  .sidebar-menu li.active a {
+    background-color: var(--light-color);
+    color: #38496E; /* Specific color from gradient start */
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+  }
+
   /* --- Main Content --- */
   .main-content {
     flex-grow: 1;
     padding: 30px;
-    overflow-y: auto; /* Jika konten lebih panjang dari layar */
+    overflow-y: auto;
+    margin-left: 250px; /* Added: Offset for the fixed sidebar */
   }
-  
+
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #E0E0E0;
   }
-  
+
   .header .header-title {
     color: var(--dark-color);
-    font-weight: 600;
-    font-size: 28px;
+    font-weight: 700;
+    font-size: 30px;
   }
-  
+
   h2 {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       color: var(--dark-color);
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 24px;
   }
-  
+
   /* --- Table Styles --- */
   table {
     width: 100%;
     border-collapse: collapse;
     background: var(--light-color);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
     overflow: hidden;
   }
-  
+
   table thead tr {
-    background-color: var(--primary-color);
+    background: var(--primary-gradient); /* Applied gradient */
     color: var(--light-color);
     text-align: left;
     font-weight: 600;
   }
-  
+
   table th, table td {
-    padding: 15px 20px;
+    padding: 18px 20px;
     vertical-align: middle;
   }
-  
+
   table tbody tr {
     border-bottom: 1px solid #f0f0f0;
   }
-  
+
   table tbody tr:last-of-type {
     border-bottom: none;
   }
-  
+
   table tbody tr:hover {
-    background-color: #e9eff5;
+    background-color: #EBF2F7;
   }
-  
+
   /* --- Button Styles --- */
   button {
-    padding: 8px 15px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.3s, transform 0.2s;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     color: var(--light-color);
   }
-  
+
   button:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
   }
-  
+
   td button.edit, td a .hapus {
       margin-bottom: 5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
   }
-  
+
   .action-buttons {
-      text-align: right; 
+      text-align: right;
       margin-top: 20px;
   }
-  
+
   button.tambah { background-color: var(--success-color); }
-  button.tambah:hover { background-color: #40c3b2; }
-  
-  button.edit { background-color: var(--edit-color); }
-  button.edit:hover { background-color: #e8a43e; }
-  
+  button.tambah:hover { background-color: #218838; }
+
+  button.edit {
+    background-color: var(--edit-color);
+    color: var(--dark-color);
+  }
+  button.edit:hover { background-color: #E0A800; }
+
   button.hapus { background-color: var(--danger-color); }
-  button.hapus:hover { background-color: #d34040; }
-  
-  button.simpan { background-color: var(--primary-color); width: 100%; padding: 12px; font-size: 16px; }
-  button.simpan:hover { background-color: #3a80d2; }
-  
-  button.logout { background-color: #6c757d; } /* Abu-abu netral */
-  button.logout:hover { background-color: #5a6268; }
-  
+  button.hapus:hover { background-color: #C82333; }
+
+  button.simpan {
+    background: var(--primary-gradient); /* Applied gradient */
+    width: 100%;
+    padding: 14px;
+    font-size: 17px;
+  }
+  button.simpan:hover { background: var(--primary-gradient-hover); /* Applied gradient hover */ }
+
+  button.logout { background-color: #6C757D; }
+  button.logout:hover { background-color: #5A6268; }
+
   td a {
       text-decoration: none;
   }
-  
+
   /* --- Modal Styles --- */
   .modal {
     display: none;
@@ -192,108 +228,164 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     justify-content: center;
     align-items: center;
   }
-  
+
   .modal-content {
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    background-color: var(--light-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
     width: 90%;
-    max-width: 500px;
-    padding: 25px 30px;
+    max-width: 550px;
+    padding: 35px 40px;
     position: relative;
-    animation: slide-down 0.4s ease;
+    animation: slide-down 0.5s ease-out;
   }
-  
+
   .close-button {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    color: #aaa;
-    font-size: 28px;
+    top: 20px;
+    right: 20px;
+    color: #999;
+    font-size: 34px;
     font-weight: bold;
     cursor: pointer;
+    transition: color 0.3s ease;
   }
-  
+
   .close-button:hover,
   .close-button:focus {
     color: var(--dark-color);
   }
-  
+
   .modal-content h2 {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     text-align: center;
+    color: var(--dark-color);
+    font-size: 26px;
   }
-  
+
   /* --- Form Styles in Modal (Generic for all forms) --- */
   .modal-content form label {
     display: block;
     font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 14px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: var(--dark-color);
   }
-  
+
   .modal-content form input[type="text"],
   .modal-content form input[type="number"],
   .modal-content form textarea,
   .modal-content form select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-bottom: 20px;
+    padding: 13px;
+    border: 1px solid #DEDEDE;
+    border-radius: var(--border-radius-sm);
+    font-size: 15px;
+    margin-bottom: 25px;
     font-family: 'Poppins', sans-serif;
-    background-color: #fff;
+    background-color: #FDFDFD;
     transition: border-color 0.3s, box-shadow 0.3s;
   }
-  
+
   .modal-content form select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    padding-right: 40px; /* Space for arrow */
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%23555%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 10px;
+    background-position: right 15px center;
+    background-size: 12px;
   }
-  
-  
+
+
   .modal-content form input:focus,
   .modal-content form textarea:focus,
   .modal-content form select:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    border-color: #38496E; /* Specific color from gradient start */
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.25);
   }
-  
+
   .modal-actions {
-    margin-top: 10px;
+    margin-top: 15px;
   }
-  
-  
+
+
   /* --- Animation --- */
   @keyframes slide-down {
     from {
         opacity: 0;
-        transform: translateY(-30px);
+        transform: translateY(-50px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
     }
-  }/* CSS from pelanggan.php */
-.btn-jual { background-color: #9b59b6; }
-.btn-jual:hover { background-color: #8e44ad; }
-.action-cell { display: flex; flex-wrap: wrap; gap: 5px; }
-.table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-#searchInput { width: 300px; padding: 10px 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
-.pagination-container { display: flex; gap: 5px; }
-.page-btn { padding: 8px 12px; border: 1px solid #ddd; background-color: #fff; color: var(--primary-color); cursor: pointer; border-radius: 5px; }
-.page-btn.active { background-color: var(--primary-color); color: #fff; }
-.page-btn:disabled { cursor: not-allowed; opacity: 0.6; }
-.no-data-row { text-align: center; font-style: italic; }
+  }
+/* CSS from pelanggan.php (incorporated and adjusted) */
+.btn-jual {
+  background-color: #9b59b6;
+  color: white;
+}
+.btn-jual:hover {
+  background-color: #8e44ad;
+}
+.action-cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+#searchInput {
+  width: 300px;
+  padding: 12px 15px;
+  border: 1px solid #DEDEDE;
+  border-radius: var(--border-radius-sm);
+  font-size: 15px;
+  box-shadow: var(--shadow-sm);
+}
+#searchInput:focus { outline: none; border-color: #38496E; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); }
+.pagination-container {
+  display: flex;
+  gap: 8px;
+}
+.page-btn {
+  padding: 9px 15px;
+  border: 1px solid #DEDEDE;
+  background-color: var(--light-color);
+  color: #38496E;
+  cursor: pointer;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.page-btn.active {
+  background: var(--primary-gradient); /* Applied gradient */
+  color: var(--light-color);
+  border-color: #38496E;
+}
+.page-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #E9ECEF;
+  color: #ADB5BD;
+}
+.page-btn:hover:not(:disabled) {
+    background-color: #EBF2F7;
+    border-color: #4A608F;
+}
+.no-data-row {
+  text-align: center;
+  font-style: italic;
+  padding: 20px !important;
+  color: var(--text-color);
+}

@@ -502,16 +502,26 @@ $inboundChartDataJson = json_encode($inboundChartData);
         </div>
     </div>
 
-    <div id="pemasukanModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2><i class="fas fa-dolly"></i> Buat Transaksi Pemasukan</h2>
-            <form id="pemasukanForm" action="buat_transaksi.php" method="GET">
-                <label for="distributor_id">Pilih Distributor:</label>
+    <!-- Enhanced Modal HTML - Replace the existing modal sections in your home.php -->
+
+<!-- Enhanced Pemasukan Modal -->
+<div id="pemasukanModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>
+            <i class="fas fa-dolly"></i> 
+            Buat Transaksi Pemasukan
+        </h2>
+        <form id="pemasukanForm" action="buat_transaksi.php" method="GET">
+            <div class="form-section">
+                <label for="distributor_id">
+                    <i class="fas fa-truck" style="margin-right: 8px; color: #4A608F;"></i>
+                    Pilih Distributor
+                </label>
                 <select name="id_distributor" id="distributor_id" required>
                     <option value="">-- Pilih Distributor --</option>
                     <?php
-                    // Re-open connection if closed, although it should be open from the main script
+                    // Re-open connection if closed
                     if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
                     $distributor_res = $koneksi->query("SELECT id_distributor, nama_distributor FROM Distributor ORDER BY nama_distributor");
                     while($dist = $distributor_res->fetch_assoc()) {
@@ -519,23 +529,35 @@ $inboundChartDataJson = json_encode($inboundChartData);
                     }
                     ?>
                 </select>
-                <div class="modal-actions">
-                    <button type="submit" class="btn btn-success">Lanjutkan</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-arrow-right"></i>
+                    Lanjutkan
+                </button>
+            </div>
+        </form>
     </div>
+</div>
 
-    <div id="penjualanModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2><i class="fas fa-shopping-cart"></i> Buat Transaksi Penjualan</h2>
-            <form id="penjualanForm" action="buat_transaksi.php" method="GET">
-                <label for="pelanggan_id">Pilih Pelanggan:</label>
+<!-- Enhanced Penjualan Modal -->
+<div id="penjualanModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>
+            <i class="fas fa-shopping-cart"></i> 
+            Buat Transaksi Penjualan
+        </h2>
+        <form id="penjualanForm" action="buat_transaksi.php" method="GET">
+            <div class="form-section">
+                <label for="pelanggan_id">
+                    <i class="fas fa-user-friends" style="margin-right: 8px; color: #9b59b6;"></i>
+                    Pilih Pelanggan
+                </label>
                 <select name="id_pelanggan" id="pelanggan_id" required>
                     <option value="">-- Pilih Pelanggan --</option>
                     <?php
-                    // Re-open connection if closed, although it should be open from the main script
+                    // Re-open connection if closed
                     if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
                     $pelanggan_res = $koneksi->query("SELECT id_pelanggan, nama_pelanggan FROM Pelanggan ORDER BY nama_pelanggan");
                     while($pel = $pelanggan_res->fetch_assoc()) {
@@ -543,12 +565,16 @@ $inboundChartDataJson = json_encode($inboundChartData);
                     }
                     ?>
                 </select>
-                <div class="modal-actions">
-                    <button type="submit" class="btn">Lanjutkan</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" class="btn">
+                    <i class="fas fa-arrow-right"></i>
+                    Lanjutkan
+                </button>
+            </div>
+        </form>
     </div>
+</div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
