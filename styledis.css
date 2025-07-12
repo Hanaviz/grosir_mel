@@ -6,8 +6,8 @@
   --light-color: #fff;
   --text-color: #555;
   --success-color: #50e3c2; /* Hijau toska */
-  --danger-color: #e35050;  /* Merah */
-  --edit-color: #f8b44e;    /* Kuning */
+  --danger-color: #e35050; /* Merah */
+  --edit-color: #f8b44e; /* Kuning */
   --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   --border-radius: 8px;
 }
@@ -16,7 +16,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -119,7 +119,8 @@ table thead tr {
   font-weight: 600;
 }
 
-table th, table td {
+table th,
+table td {
   padding: 15px 20px;
 }
 
@@ -158,17 +159,37 @@ table tbody tr:hover {
   transform: translateY(-2px);
 }
 
-.btn-primary { background-color: var(--primary-color); color: var(--light-color); }
-.btn-primary:hover { background-color: #3a80d2; }
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+}
+.btn-primary:hover {
+  background-color: #3a80d2;
+}
 
-.btn-edit { background-color: var(--edit-color); color: var(--light-color); }
-.btn-edit:hover { background-color: #e8a43e; }
+.btn-edit {
+  background-color: var(--edit-color);
+  color: var(--light-color);
+}
+.btn-edit:hover {
+  background-color: #e8a43e;
+}
 
-.btn-danger { background-color: var(--danger-color); color: var(--light-color); }
-.btn-danger:hover { background-color: #d34040; }
+.btn-danger {
+  background-color: var(--danger-color);
+  color: var(--light-color);
+}
+.btn-danger:hover {
+  background-color: #d34040;
+}
 
-.btn-success { background-color: var(--success-color); color: var(--light-color); }
-.btn-success:hover { background-color: #40c3b2; }
+.btn-success {
+  background-color: var(--success-color);
+  color: var(--light-color);
+}
+.btn-success:hover {
+  background-color: #40c3b2;
+}
 
 .action-cell {
   display: flex;
@@ -193,7 +214,7 @@ table tbody tr:hover {
 .modal-content {
   background-color: #fff;
   border-radius: var(--border-radius);
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   width: 90%;
   max-width: 500px;
   animation: slide-down 0.4s ease;
@@ -265,11 +286,282 @@ table tbody tr:hover {
 
 @keyframes slide-down {
   from {
-      opacity: 0;
-      transform: translateY(-30px);
+    opacity: 0;
+    transform: translateY(-30px);
   }
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
+} /* CSS from distributor.php */
+.btn-success {
+  background-color: var(--success-color);
+  color: var(--light-color);
+}
+.btn-success:hover {
+  background-color: #40c3b2;
+}
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+#searchInput {
+  width: 300px;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.pagination-container {
+  display: flex;
+  gap: 5px;
+}
+.page-btn {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: var(--primary-color);
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+.page-btn:hover {
+  background-color: #f0f0f0;
+}
+.page-btn.active {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+.page-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.no-data-row {
+  text-align: center;
+  font-style: italic;
+  color: var(--text-color);
+} /* Existing styles */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+.stat-card {
+  background-color: var(--light-color);
+  padding: 25px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.stat-card .icon {
+  font-size: 32px;
+  padding: 15px;
+  border-radius: 50%;
+  color: var(--light-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.stat-card .icon.barang {
+  background-color: #f8b44e;
+} /* Kuning */
+.stat-card .icon.pelanggan {
+  background-color: #50e3c2;
+} /* Hijau Toska */
+.stat-card .icon.distributor {
+  background-color: #4a90e2;
+} /* Biru */
+.stat-card .icon.transaksi {
+  background-color: #e35050;
+} /* Merah */
+
+.stat-card-info h3 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--dark-color);
+  margin: 0;
+}
+.stat-card-info p {
+  font-size: 14px;
+  color: var(--text-color);
+  margin: 0;
+}
+.content-header {
+  margin-bottom: 20px;
+  color: var(--dark-color);
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-actions button {
+  margin-left: 10px;
+}
+/* Style for History section */
+.history-section {
+  background-color: var(--light-color);
+  padding: 25px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin-top: 30px;
+}
+.history-section h3 {
+  margin-bottom: 20px;
+  color: var(--dark-color);
+  font-weight: 600;
+}
+.filter-form {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.filter-form label {
+  font-weight: 500;
+  color: var(--dark-color);
+}
+.filter-form input[type="radio"] {
+  margin-right: 5px;
+}
+.filter-form input[type="date"],
+.filter-form input[type="month"],
+.filter-form input[type="number"],
+.filter-form button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.filter-form button {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.filter-form button:hover {
+  background-color: #3a80d2;
+}
+.history-summary {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: right;
+  margin-top: 20px;
+  color: var(--dark-color);
+}
+
+/* NEW STYLES FOR MODAL */
+.modal-content {
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); /* Stronger shadow */
+  width: 90%;
+  max-width: 450px; /* Slightly smaller */
+  padding: 30px; /* More padding */
+  position: relative;
+  animation: slide-down 0.4s ease-out; /* Smoother animation */
+  overflow: hidden; /* Ensure rounded corners apply */
+}
+
+.modal-content h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin-bottom: 25px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Gap between icon and text */
+}
+
+.modal-content .close-button {
+  top: 15px;
+  right: 20px;
+  font-size: 32px; /* Larger close button */
+  color: #aaa;
+  transition: color 0.3s ease;
+}
+.modal-content .close-button:hover {
+  color: var(--danger-color); /* Red on hover */
+}
+
+.modal-content label {
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 10px; /* More space */
+  font-size: 15px;
+}
+
+.modal-content select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* More rounded */
+  font-size: 16px;
+  margin-bottom: 25px; /* More space */
+  background-color: #f9f9f9; /* Light background */
+  transition: border-color 0.3s, box-shadow 0.3s;
+  -webkit-appearance: none; /* Remove default arrow */
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%23555%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 12px;
+  cursor: pointer;
+}
+
+.modal-content select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.3);
+}
+
+.modal-actions {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.modal-actions .btn {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.modal-actions .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific button colors for modals */
+#pemasukanModal .btn-success {
+  background-color: var(--success-color);
+}
+#pemasukanModal .btn-success:hover {
+  background-color: #40c3b2;
+}
+
+#penjualanModal .btn {
+  /* Overriding the general .btn style for this specific modal */
+  background-color: #9b59b6; /* Purple */
+  color: white;
+}
+#penjualanModal .btn:hover {
+  background-color: #8e44ad; /* Darker purple */
 }

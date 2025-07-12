@@ -59,18 +59,6 @@ if (isset($_GET['hapus'])) {
     <title>Grosir Mel - Distributor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="styledis.css" />
-    <style>
-        .btn-success { background-color: var(--success-color); color: var(--light-color); }
-        .btn-success:hover { background-color: #40c3b2; }
-        .table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        #searchInput { width: 300px; padding: 10px 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
-        .pagination-container { display: flex; gap: 5px; }
-        .page-btn { padding: 8px 12px; border: 1px solid #ddd; background-color: #fff; color: var(--primary-color); cursor: pointer; border-radius: 5px; transition: background-color 0.3s, color 0.3s; }
-        .page-btn:hover { background-color: #f0f0f0; }
-        .page-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
-        .page-btn:disabled { cursor: not-allowed; opacity: 0.6; }
-        .no-data-row { text-align: center; font-style: italic; color: var(--text-color); }
-    </style>
 </head>
 <body>
     <div class="container">

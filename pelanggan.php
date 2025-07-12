@@ -52,18 +52,6 @@ if (isset($_GET['hapus'])) {
     <title>Grosir Mel - Pelanggan</title>
     <link rel="stylesheet" href="stylepel.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        .btn-jual { background-color: #9b59b6; }
-        .btn-jual:hover { background-color: #8e44ad; }
-        .action-cell { display: flex; flex-wrap: wrap; gap: 5px; }
-        .table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        #searchInput { width: 300px; padding: 10px 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
-        .pagination-container { display: flex; gap: 5px; }
-        .page-btn { padding: 8px 12px; border: 1px solid #ddd; background-color: #fff; color: var(--primary-color); cursor: pointer; border-radius: 5px; }
-        .page-btn.active { background-color: var(--primary-color); color: #fff; }
-        .page-btn:disabled { cursor: not-allowed; opacity: 0.6; }
-        .no-data-row { text-align: center; font-style: italic; }
-    </style>
 </head>
 <body>
 <div class="sidebar">
