@@ -229,6 +229,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+        /* Existing styles */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -336,6 +337,110 @@ $inboundChartDataJson = json_encode($inboundChartData);
             text-align: right;
             margin-top: 20px;
             color: var(--dark-color);
+        }
+
+        /* NEW STYLES FOR MODAL */
+        .modal-content {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25); /* Stronger shadow */
+            width: 90%;
+            max-width: 450px; /* Slightly smaller */
+            padding: 30px; /* More padding */
+            position: relative;
+            animation: slide-down 0.4s ease-out; /* Smoother animation */
+            overflow: hidden; /* Ensure rounded corners apply */
+        }
+
+        .modal-content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Gap between icon and text */
+        }
+
+        .modal-content .close-button {
+            top: 15px;
+            right: 20px;
+            font-size: 32px; /* Larger close button */
+            color: #aaa;
+            transition: color 0.3s ease;
+        }
+        .modal-content .close-button:hover {
+            color: var(--danger-color); /* Red on hover */
+        }
+
+        .modal-content label {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 10px; /* More space */
+            font-size: 15px;
+        }
+
+        .modal-content select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px; /* More rounded */
+            font-size: 16px;
+            margin-bottom: 25px; /* More space */
+            background-color: #f9f9f9; /* Light background */
+            transition: border-color 0.3s, box-shadow 0.3s;
+            -webkit-appearance: none; /* Remove default arrow */
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%23555%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 12px;
+            cursor: pointer;
+        }
+
+        .modal-content select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.3);
+        }
+
+        .modal-actions {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .modal-actions .btn {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .modal-actions .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Specific button colors for modals */
+        #pemasukanModal .btn-success {
+            background-color: var(--success-color);
+        }
+        #pemasukanModal .btn-success:hover {
+            background-color: #40c3b2;
+        }
+
+        #penjualanModal .btn { /* Overriding the general .btn style for this specific modal */
+            background-color: #9b59b6; /* Purple */
+            color: white;
+        }
+        #penjualanModal .btn:hover {
+            background-color: #8e44ad; /* Darker purple */
         }
     </style>
 </head>
@@ -463,6 +568,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
                 </table>
             </div>
 
+            <!-- Bagian Histori Penjualan -->
             <div class="history-section">
                 <h3>Histori Penjualan</h3>
                 <form class="filter-form" method="GET" action="home.php">
@@ -536,6 +642,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
                 </div>
             </div>
 
+            <!-- Bagian Histori Pemasukan -->
             <div class="history-section" style="margin-top: 30px;">
                 <h3>Histori Pemasukan</h3>
                 <form class="filter-form" method="GET" action="home.php">
@@ -615,7 +722,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
     <div id="pemasukanModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h2>Buat Transaksi Pemasukan</h2>
+            <h2><i class="fas fa-dolly"></i> Buat Transaksi Pemasukan</h2>
             <form id="pemasukanForm" action="buat_transaksi.php" method="GET">
                 <label for="distributor_id">Pilih Distributor:</label>
                 <select name="id_distributor" id="distributor_id" required>
@@ -639,7 +746,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
     <div id="penjualanModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h2>Buat Transaksi Penjualan</h2>
+            <h2><i class="fas fa-shopping-cart"></i> Buat Transaksi Penjualan</h2>
             <form id="penjualanForm" action="buat_transaksi.php" method="GET">
                 <label for="pelanggan_id">Pilih Pelanggan:</label>
                 <select name="id_pelanggan" id="pelanggan_id" required>
@@ -654,7 +761,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
                     ?>
                 </select>
                 <div class="modal-actions">
-                    <button type="submit" class="btn" style="background-color: #9b59b6; color: white; width:100%;">Lanjutkan</button>
+                    <button type="submit" class="btn">Lanjutkan</button>
                 </div>
             </form>
         </div>

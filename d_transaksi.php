@@ -119,7 +119,15 @@ $header_data = $header_result->fetch_assoc();
 <div class="main-content">
     <div class="header">
         <div class="header-title">Detail Transaksi #<?= htmlspecialchars($header_data['id_transaksi']); ?></div>
-        <a href="transaksi.php"><button class="logout">Kembali</button></a>
+        <div style="display: flex; gap: 10px;">
+            <!-- Tombol Cetak Nota -->
+            <a href="print_nota.php?id=<?= htmlspecialchars($id_transaksi); ?>" target="_blank">
+                <button class="btn btn-primary" style="background-color: #007bff; color: white;">
+                    <i class="fas fa-print"></i> Cetak Nota
+                </button>
+            </a>
+            <a href="transaksi.php"><button class="logout">Kembali</button></a>
+        </div>
     </div>
     
     <?php if(isset($_GET['error']) && $_GET['error'] == 'stok_kurang'): ?>
