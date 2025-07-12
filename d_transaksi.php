@@ -102,6 +102,99 @@ $header_data = $header_result->fetch_assoc();
     <style>
         .alert-box { padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: var(--border-radius); font-weight: 500; }
         .alert-box.danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+
+        /* NEW STYLES FOR MODAL IN D_TRANSAKSI.PHP */
+        .modal-content {
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25); /* Stronger shadow */
+            width: 90%;
+            max-width: 450px; /* Slightly smaller */
+            padding: 30px; /* More padding */
+            position: relative;
+            animation: slide-down 0.4s ease-out; /* Smoother animation */
+            overflow: hidden; /* Ensure rounded corners apply */
+        }
+
+        .modal-content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Gap between icon and text */
+        }
+
+        .modal-content .close-button {
+            top: 15px;
+            right: 20px;
+            font-size: 32px; /* Larger close button */
+            color: #aaa;
+            transition: color 0.3s ease;
+        }
+        .modal-content .close-button:hover {
+            color: var(--danger-color); /* Red on hover */
+        }
+
+        .modal-content label {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 10px; /* More space */
+            font-size: 15px;
+        }
+
+        .modal-content select,
+        .modal-content input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px; /* More rounded */
+            font-size: 16px;
+            margin-bottom: 25px; /* More space */
+            background-color: #f9f9f9; /* Light background */
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .modal-content select {
+            -webkit-appearance: none; /* Remove default arrow */
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%23555%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 12px;
+            cursor: pointer;
+        }
+
+        .modal-content select:focus,
+        .modal-content input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.3);
+        }
+
+        .modal-actions {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .modal-actions .simpan {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .modal-actions .simpan:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -171,7 +264,7 @@ $header_data = $header_result->fetch_assoc();
         <tr>
             <td><?= htmlspecialchars($row['nama_barang']); ?></td>
             <td><?= htmlspecialchars($row['jumlah']) . ' ' . htmlspecialchars($row['satuan']); ?></td>
-            <td>Rp <?= number_format($row['harga_saat_transaksi'], 0, ',', '.'); ?></td>
+            <td>Rp <?= number_format($row['harga_saat_transaksi'], 0, ',', '.'); ?></td> <!-- FIX: Changed to harga_saat_transaksi -->
             <td>Rp <?= number_format($subtotal, 0, ',', '.'); ?></td>
             <td>
                 <a href="d_transaksi.php?id=<?= $id_transaksi; ?>&hapus_detail=<?= $row['id_detail']; ?>" onclick="return confirm('Yakin hapus item ini dari transaksi?')">
@@ -204,7 +297,7 @@ $header_data = $header_result->fetch_assoc();
 <div id="dataModal" class="modal">
     <div class="modal-content">
         <span class="close-button">&times;</span>
-        <h2 id="modalTitle">Tambah Barang ke Transaksi</h2>
+        <h2><i class="fas fa-boxes"></i> Tambah Barang ke Transaksi</h2> <!-- Added icon here -->
         <form id="dataForm" method="POST" action="d_transaksi.php?id=<?= $id_transaksi; ?>">
             <label for="id_barang">Pilih Barang:</label>
             <select id="id_barang" name="id_barang" required>
