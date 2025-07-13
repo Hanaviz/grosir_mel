@@ -195,46 +195,107 @@ $header_data = $header_result->fetch_assoc();
     </div>
 </div>
 
+<!-- Enhanced Modal Structure untuk Tambah Barang -->
 <div id="dataModal" class="modal">
     <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h2><i class="fas fa-boxes"></i> Tambah Barang ke Transaksi</h2> <form id="dataForm" method="POST" action="d_transaksi.php?id=<?= $id_transaksi; ?>">
-            <label for="id_barang">Pilih Barang:</label>
-            <select id="id_barang" name="id_barang" required>
-                <option value="">-- Pilih Barang --</option>
-                <?php
-                if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
-                // Query diperbarui untuk mengambil satuan dan menampilkannya di pilihan
-                $barang_res = $koneksi->query("SELECT id_barang, nama_barang, stok, satuan FROM Barang WHERE status = 'Aktif' ORDER BY nama_barang");                while($brg = $barang_res->fetch_assoc()){
-                    echo "<option value='".htmlspecialchars($brg['id_barang'])."'>".htmlspecialchars($brg['nama_barang'])." (Stok: ".htmlspecialchars($brg['stok'])." ".htmlspecialchars($brg['satuan'].")</option>");
-                }
-                ?>
-            </select>
+        <div class="modal-header">
+            <span class="close-button">&times;</span>
+            <h2><i class="fas fa-plus-circle"></i> Tambah Barang ke Transaksi</h2>
+        </div>
+        
+        <div class="modal-body">
+            <form id="dataForm" method="POST" action="d_transaksi.php?id=<?= $id_transaksi; ?>">
+                <div class="form-group">
+                    <label for="id_barang">Pilih Barang</label>
+                    <select id="id_barang" name="id_barang" required>
+                        <option value="">-- Pilih Barang --</option>
+                        <?php
+                        if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
+                        $barang_res = $koneksi->query("SELECT id_barang, nama_barang, stok, satuan FROM Barang WHERE status = 'Aktif' ORDER BY nama_barang");
+                        while($brg = $barang_res->fetch_assoc()){
+                            echo "<option value='".htmlspecialchars($brg['id_barang'])."'>".htmlspecialchars($brg['nama_barang'])." (Stok: ".htmlspecialchars($brg['stok'])." ".htmlspecialchars($brg['satuan']).")</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
 
-            <label for="jumlah">Jumlah:</label>
-            <input type="number" id="jumlah" name="jumlah" min="1" required>
-
-            <div class="modal-actions">
-                <button type="submit" class="simpan">Simpan</button>
-            </div>
-        </form>
+                <div class="form-group">
+                    <label for="jumlah">Jumlah</label>
+                    <input type="number" id="jumlah" name="jumlah" min="1" required placeholder="Masukkan jumlah barang">
+                </div>
+            </form>
+        </div>
+        
+        <div class="modal-actions">
+            <button type="submit" form="dataForm" class="simpan">
+                <i class="fas fa-save"></i> Simpan
+            </button>
+        </div>
     </div>
 </div>
 
+<!-- Enhanced JavaScript untuk Modal -->
 <script>
     const modal = document.getElementById("dataModal");
     const tambahBtn = document.getElementById("tambahBtn");
     const closeBtn = document.querySelector(".close-button");
     const form = document.getElementById("dataForm");
+    const simpanBtn = document.querySelector(".modal-actions .simpan");
 
     const openModal = () => {
         form.reset();
         modal.style.display = "flex";
+        document.body.style.overflow = "hidden"; // Prevent background scroll
+        
+        // Focus on first input after animation
+        setTimeout(() => {
+            document.getElementById("id_barang").focus();
+        }, 400);
+    }
+
+    const closeModal = () => {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto"; // Restore background scroll
     }
 
     tambahBtn.addEventListener("click", openModal);
-    closeBtn.addEventListener("click", () => modal.style.display = "none");
-    window.addEventListener("click", (e) => { if(e.target == modal) modal.style.display = "none"; });
+    closeBtn.addEventListener("click", closeModal);
+    
+    // Close modal when clicking outside
+    window.addEventListener("click", (e) => { 
+        if(e.target == modal) closeModal(); 
+    });
+
+    // Close modal with Escape key
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.style.display === "flex") {
+            closeModal();
+        }
+    });
+
+    // Form submission with loading state
+    form.addEventListener("submit", (e) => {
+        simpanBtn.classList.add("loading");
+        simpanBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+        simpanBtn.disabled = true;
+    });
+
+    // Enhanced form validation
+    document.getElementById("jumlah").addEventListener("input", function() {
+        const value = parseInt(this.value);
+        if (value < 1) {
+            this.setCustomValidity("Jumlah harus lebih dari 0");
+        } else {
+            this.setCustomValidity("");
+        }
+    });
+
+    // Auto-focus and smooth animations
+    document.getElementById("id_barang").addEventListener("change", function() {
+        if (this.value) {
+            document.getElementById("jumlah").focus();
+        }
+    });
 </script>
 </body>
 </html>

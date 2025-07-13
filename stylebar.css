@@ -239,6 +239,7 @@ td a button {
 }
 
 /* --- Modal Styles --- */
+/* Enhanced Modal Styles for Tambah Barang */
 .modal {
     display: none;
     position: fixed;
@@ -248,187 +249,369 @@ td a button {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
     justify-content: center;
     align-items: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .modal-content {
-    background-color: var(--light-color);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
     width: 90%;
-    max-width: 550px;
-    padding: 35px 40px;
+    max-width: 500px;
+    padding: 0;
     position: relative;
-    animation: slide-down 0.5s ease-out;
+    animation: slideInUp 0.4s ease-out;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.close-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    color: #999;
-    font-size: 34px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: var(--dark-color);
-}
-
-.modal-content h2 {
-    margin-bottom: 30px;
-    text-align: center;
-    color: var(--dark-color);
-    font-size: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-/* --- Form Styles in Modal (Generic for all forms) --- */
-.modal-content form label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 10px;
-    font-size: 15px;
-    color: var(--dark-color);
-}
-
-.modal-content form input[type="text"],
-.modal-content form input[type="number"],
-.modal-content form textarea,
-.modal-content form select {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #DEDEDE;
-    border-radius: var(--border-radius-sm);
-    font-size: 15px;
-    margin-bottom: 25px;
-    font-family: 'Poppins', sans-serif;
-    background-color: #FDFDFD;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.modal-content form select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%23555%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 12px;
-}
-
-.modal-content form input:focus,
-.modal-content form textarea:focus,
-.modal-content form select:focus {
-    outline: none;
-    border-color: #38496E; /* Specific color from gradient start */
-    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.25);
-}
-
-.modal-actions {
-    margin-top: 15px;
-    text-align: center;
-}
-
-/* --- Animation --- */
-@keyframes slide-down {
+@keyframes slideInUp {
     from {
         opacity: 0;
-        transform: translateY(-50px);
+        transform: translateY(50px) scale(0.9);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
-/* CSS from d_transaksi.php (incorporated and adjusted) */
-.alert-box { padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: var(--border-radius-sm); font-weight: 500; }
-.alert-box.danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
-
-.modal-content.d_transaksi {
-    box-shadow: var(--shadow-lg);
-    max-width: 480px;
-    padding: 30px;
+/* Modal Header */
+.modal-header {
+    background: linear-gradient(135deg, #38496E 0%, #4A608F 100%);
+    color: white;
+    padding: 30px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-.modal-content.d_transaksi h2 {
+.modal-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    pointer-events: none;
+}
+
+.modal-content h2 {
+    margin: 0;
     font-size: 24px;
     font-weight: 700;
-    color: var(--dark-color);
-    margin-bottom: 25px;
-    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
 }
 
-.modal-content.d_transaksi .close-button {
+.modal-content h2 i {
+    font-size: 28px;
+    color: #FFD700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Close Button */
+.close-button {
+    position: absolute;
     top: 15px;
     right: 20px;
-    font-size: 32px;
-    color: #aaa;
-    transition: color 0.3s ease;
-}
-.modal-content.d_transaksi .close-button:hover {
-    color: var(--danger-color);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
 }
 
-.modal-content.d_transaksi label {
+.close-button:hover {
+    color: white;
+    background: rgba(220, 53, 69, 0.8);
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 40px;
+    background: white;
+}
+
+/* Enhanced Form Styles */
+.modal-body form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.form-group label {
+    display: block;
     font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 10px;
-    font-size: 15px;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.modal-content.d_transaksi select,
-.modal-content.d_transaksi input[type="number"] {
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: var(--border-radius-sm);
+.form-group label::after {
+    content: '*';
+    color: #e74c3c;
+    margin-left: 4px;
+}
+
+/* Enhanced Input Styles */
+.form-group select,
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e1e8ed;
+    border-radius: 12px;
     font-size: 16px;
-    margin-bottom: 25px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: 'Poppins', sans-serif;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.modal-content.d_transaksi select {
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%23555%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+.form-group select {
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22292.4%22 height%3D%22292.4%22%3E%3Cpath fill%3D%22%234A608F%22 d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-12.9 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 12.9l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-12.8 0-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 12px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
-.modal-content.d_transaksi select:focus,
-.modal-content.d_transaksi input[type="number"]:focus {
-    border-color: #38496E;
-    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.3);
+.form-group select:focus,
+.form-group input[type="number"]:focus {
+    border-color: #4A608F;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(74, 96, 143, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
-.modal-actions.d_transaksi {
-    margin-top: 15px;
-    text-align: center;
+.form-group input[type="number"]:focus {
+    background: white;
 }
 
-.modal-actions.d_transaksi .simpan {
-    padding: 14px 20px;
-    font-size: 18px;
+/* Input Icons */
+.form-group::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1;
+    opacity: 0.6;
+}
+
+.form-group:first-child::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="%234A608F" viewBox="0 0 24 24"><path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z"/></svg>');
+    top: 45%;
+}
+
+.form-group:last-child::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="%234A608F" viewBox="0 0 24 24"><path d="M7 4V2a1 1 0 0 1 2 0v2h6V2a1 1 0 0 1 2 0v2h3a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h3zm0 2H4a1 1 0 0 0-1 1v2h18V7a1 1 0 0 0-1-1h-3v1a1 1 0 0 1-2 0V6H9v1a1 1 0 0 1-2 0V6zM3 11v8a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-8H3z"/></svg>');
+    top: 45%;
+}
+
+.form-group select,
+.form-group input[type="number"] {
+    padding-left: 50px;
+}
+
+/* Enhanced Button */
+.modal-actions {
+    padding: 0 40px 40px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-actions button.simpan {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 16px;
     font-weight: 600;
-    border-radius: var(--border-radius-sm);
-    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.modal-actions.d_transaksi .simpan:hover {
+.modal-actions button.simpan::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.modal-actions button.simpan:hover::before {
+    left: 100%;
+}
+
+.modal-actions button.simpan:hover {
+    background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
     transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+}
+
+.modal-actions button.simpan:active {
+    transform: translateY(-1px);
+}
+
+/* Cancel Button (if needed) */
+.modal-actions button.cancel {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.modal-actions button.cancel:hover {
+    background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+}
+
+/* Loading Animation */
+.modal-actions button.simpan.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.modal-actions button.simpan.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        margin: 10px;
+    }
+    
+    .modal-header {
+        padding: 25px 30px;
+    }
+    
+    .modal-body {
+        padding: 30px 25px;
+    }
+    
+    .modal-actions {
+        padding: 0 25px 30px;
+    }
+    
+    .modal-actions button.simpan {
+        padding: 12px 30px;
+        font-size: 14px;
+    }
+    
+    .form-group select,
+    .form-group input[type="number"] {
+        padding: 12px 15px 12px 45px;
+        font-size: 14px;
+    }
+}
+
+/* Tambah Barang Button Enhancement */
+button.tambah {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+button.tambah::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+button.tambah:hover::before {
+    left: 100%;
+}
+
+button.tambah:hover {
+    background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
 }
 
 /* CSS from transaksi.php (incorporated and adjusted) */
