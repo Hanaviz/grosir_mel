@@ -6,8 +6,11 @@ include 'koneksi.php';
 <head>
     <meta charset="UTF-8" />
     <title>Daftar Transaksi - Grosir Mel</title>
-    <link rel="stylesheet" href="stylebar.css" /> 
+    <link rel="stylesheet" href="style.css" /> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="sidebar">
@@ -88,12 +91,12 @@ include 'koneksi.php';
             </td>
             <td><?= htmlspecialchars($row['pihak_terkait'] ?? 'N/A'); ?></td>
             <td>Rp <?= number_format($row['total_nilai'] ?? 0, 0, ',', '.'); ?></td>
-            <td style="display: flex; gap: 5px;">
+            <td class="action-cell">
                 <a href="d_transaksi.php?id=<?= $row['id_transaksi']; ?>">
-                <button class="edit" title="Lihat Detail"><i class="fas fa-eye"></i> Detail</button>
+                <button class="btn btn-primary" title="Lihat Detail"><i class="fas fa-eye"></i> Detail</button>
                 </a>
                  <a href="hapus_transaksi.php?id=<?= $row['id_transaksi']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini? Stok barang akan dikembalikan seperti semula.');">
-                 <button class="hapus" title="Hapus Transaksi"><i class="fas fa-trash-alt"></i> Hapus</button>
+                 <button class="btn btn-danger" title="Hapus Transaksi"><i class="fas fa-trash-alt"></i> Hapus</button>
     </a>
 </td>
         </tr>
@@ -187,48 +190,60 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 <div id="pemasukanModal" class="modal">
     <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h2>Buat Transaksi Pemasukan</h2>
-        <form id="pemasukanForm" action="buat_transaksi.php" method="GET">
-            <label for="distributor_id">Pilih Distributor:</label>
-            <select name="id_distributor" id="distributor_id" required>
-    <option value="">-- Pilih Distributor --</option>
-    <?php
-    // Buka koneksi lagi jika sudah ditutup
-    if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
-    $distributor_res = $koneksi->query("SELECT id_distributor, nama_distributor FROM Distributor ORDER BY nama_distributor");
-    while($dist = $distributor_res->fetch_assoc()) {
-        echo "<option value='".htmlspecialchars($dist['id_distributor'])."'>".htmlspecialchars($dist['nama_distributor'])."</option>";
-    }
-    ?>
-</select>
-            <div class="modal-actions">
-                <button type="submit" class="btn btn-success">Lanjutkan</button>
-            </div>
-        </form>
+        <div class="modal-header">
+            <h2>Buat Transaksi Pemasukan</h2>
+            <span class="close-button">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="pemasukanForm" action="buat_transaksi.php" method="GET">
+                <div class="form-group">
+                    <label for="distributor_id">Pilih Distributor:</label>
+                    <select name="id_distributor" id="distributor_id" required>
+            <option value="">-- Pilih Distributor --</option>
+            <?php
+            // Buka koneksi lagi jika sudah ditutup
+            if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
+            $distributor_res = $koneksi->query("SELECT id_distributor, nama_distributor FROM Distributor ORDER BY nama_distributor");
+            while($dist = $distributor_res->fetch_assoc()) {
+                echo "<option value='".htmlspecialchars($dist['id_distributor'])."'>".htmlspecialchars($dist['nama_distributor'])."</option>";
+            }
+            ?>
+        </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-success">Lanjutkan</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
 <div id="penjualanModal" class="modal">
     <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h2>Buat Transaksi Penjualan</h2>
-        <form id="penjualanForm" action="buat_transaksi.php" method="GET">
-            <label for="pelanggan_id">Pilih Pelanggan:</label>
-            <select name="id_pelanggan" id="pelanggan_id" required>
-    <option value="">-- Pilih Pelanggan --</option>
-    <?php
-    if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
-    $pelanggan_res = $koneksi->query("SELECT id_pelanggan, nama_pelanggan FROM Pelanggan ORDER BY nama_pelanggan");
-    while($pel = $pelanggan_res->fetch_assoc()) {
-        echo "<option value='".htmlspecialchars($pel['id_pelanggan'])."'>".htmlspecialchars($pel['nama_pelanggan'])."</option>";
-    }
-    ?>
-</select>
-            <div class="modal-actions">
-                <button type="submit" class="btn" style="background-color: #9b59b6; color: white; width:100%;">Lanjutkan</button>
-            </div>
-        </form>
+        <div class="modal-header">
+            <h2>Buat Transaksi Penjualan</h2>
+            <span class="close-button">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="penjualanForm" action="buat_transaksi.php" method="GET">
+                <div class="form-group">
+                    <label for="pelanggan_id">Pilih Pelanggan:</label>
+                    <select name="id_pelanggan" id="pelanggan_id" required>
+            <option value="">-- Pilih Pelanggan --</option>
+            <?php
+            if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
+            $pelanggan_res = $koneksi->query("SELECT id_pelanggan, nama_pelanggan FROM Pelanggan ORDER BY nama_pelanggan");
+            while($pel = $pelanggan_res->fetch_assoc()) {
+                echo "<option value='".htmlspecialchars($pel['id_pelanggan'])."'>".htmlspecialchars($pel['nama_pelanggan'])."</option>";
+            }
+            ?>
+        </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-purple">Lanjutkan</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

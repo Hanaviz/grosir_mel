@@ -58,7 +58,10 @@ if (isset($_GET['hapus'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grosir Mel - Distributor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link rel="stylesheet" href="styledis.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -88,7 +91,6 @@ if (isset($_GET['hapus'])) {
         <div class="main-content">
             <header>
                 <h2>DAFTAR DISTRIBUTOR</h2>
-                <button class="btn btn-primary" id="tambahBtn"><i class="fas fa-plus"></i> Tambah Distributor</button>
             </header>
             
             <div class="table-controls">
@@ -151,6 +153,9 @@ if (isset($_GET['hapus'])) {
                     </tbody>
                 </table>
             </div>
+            <div class="action-buttons" style="text-align: right; margin-top: 15px;">
+                <button class="btn btn-primary" id="tambahBtn"><i class="fas fa-plus"></i> Tambah Distributor</button>
+            </div>
         </div>
     </div>
 
@@ -175,7 +180,7 @@ if (isset($_GET['hapus'])) {
                         <label for="telepon_distributor">No. HP:</label>
                         <input type="tel" id="telepon_distributor" name="telepon_distributor" required>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-actions">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
@@ -210,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("click", (event) => { if (event.target === modal) { modal.style.display = "none"; } });
 
     document.getElementById("distributorTableBody").addEventListener("click", function (event) {
-        const editButton = event.target.closest(".edit");
+        const editButton = event.target.closest(".btn-edit");
         if (editButton) {
             openModal('edit', {
                 id: editButton.dataset.id,

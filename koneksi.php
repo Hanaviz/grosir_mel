@@ -16,4 +16,3 @@ if (!$koneksi) {
 // Jika koneksi berhasil, skrip akan lanjut.
 // Anda tidak perlu menulis pesan sukses di 
 ?>
-

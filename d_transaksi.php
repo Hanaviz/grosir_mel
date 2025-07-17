@@ -97,8 +97,11 @@ $header_data = $header_result->fetch_assoc();
 <head>
     <meta charset="UTF-8" />
     <title>Detail Transaksi - Grosir Mel</title>
-    <link rel="stylesheet" href="stylebar.css" />
+    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="sidebar">
@@ -117,11 +120,11 @@ $header_data = $header_result->fetch_assoc();
         <div class="header-title">Detail Transaksi #<?= htmlspecialchars($header_data['id_transaksi']); ?></div>
         <div style="display: flex; gap: 10px;">
             <a href="print_nota.php?id=<?= htmlspecialchars($id_transaksi); ?>" target="_blank">
-                <button class="btn btn-primary" style="background-color: #007bff; color: white;">
+                <button class="btn btn-info">
                     <i class="fas fa-print"></i> Cetak Nota
                 </button>
             </a>
-            <a href="transaksi.php"><button class="logout">Kembali</button></a>
+            <a href="transaksi.php"><button class="btn btn-gray">Kembali</button></a>
         </div>
     </div>
     
@@ -131,9 +134,9 @@ $header_data = $header_result->fetch_assoc();
         </div>
     <?php endif; ?>
 
-    <div class="info-header" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: var(--shadow); margin-bottom: 20px;">
+    <div class="info-header">
         <p><strong>Tanggal:</strong> <?= htmlspecialchars(date('d F Y', strtotime($header_data['tanggal']))); ?></p>
-        <p><strong>Tipe:</strong> <span style="font-weight: bold; color: <?= $header_data['tipe_transaksi'] == 'Masuk' ? 'var(--success-color)' : 'var(--danger-color)'; ?>;"><?= htmlspecialchars($header_data['tipe_transaksi']); ?></span></p>
+        <p><strong>Tipe:</strong> <span class="<?= $header_data['tipe_transaksi'] == 'Masuk' ? 'tipe-masuk' : 'tipe-keluar'; ?>"><?= htmlspecialchars($header_data['tipe_transaksi']); ?></span></p>
         <?php if($header_data['nama_pelanggan']): ?><p><strong>Pelanggan:</strong> <?= htmlspecialchars($header_data['nama_pelanggan']); ?></p><?php endif; ?>
         <?php if($header_data['nama_distributor']): ?><p><strong>Distributor:</strong> <?= htmlspecialchars($header_data['nama_distributor']); ?></p><?php endif; ?>
     </div>
@@ -167,9 +170,9 @@ $header_data = $header_result->fetch_assoc();
             <td><?= htmlspecialchars($row['nama_barang']); ?></td>
             <td><?= htmlspecialchars($row['jumlah']) . ' ' . htmlspecialchars($row['satuan']); ?></td>
             <td>Rp <?= number_format($row['harga_saat_transaksi'], 0, ',', '.'); ?></td> <td>Rp <?= number_format($subtotal, 0, ',', '.'); ?></td>
-            <td>
+            <td class="action-cell">
                 <a href="d_transaksi.php?id=<?= $id_transaksi; ?>&hapus_detail=<?= $row['id_detail']; ?>" onclick="return confirm('Yakin hapus item ini dari transaksi?')">
-                    <button class="hapus">Hapus</button>
+                    <button class="btn btn-danger">Hapus</button>
                 </a>
             </td>
         </tr>
@@ -177,7 +180,7 @@ $header_data = $header_result->fetch_assoc();
             endwhile;
         else:
         ?>
-        <tr><td colspan="5" style="text-align:center; font-style:italic;">Belum ada barang dalam transaksi ini.</td></tr>
+        <tr class="no-data-row"><td colspan="5">Belum ada barang dalam transaksi ini.</td></tr>
         <?php
         endif;
         ?>
@@ -190,17 +193,16 @@ $header_data = $header_result->fetch_assoc();
         </tfoot>
     </table>
 
-    <div class="action-buttons" style="text-align: right; margin-top: 20px;">
-        <button class="tambah" id="tambahBtn">Tambah Barang</button>
+    <div class="action-buttons">
+        <button class="btn btn-success" id="tambahBtn">Tambah Barang</button>
     </div>
 </div>
 
-<!-- Enhanced Modal Structure untuk Tambah Barang -->
 <div id="dataModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="close-button">&times;</span>
             <h2><i class="fas fa-plus-circle"></i> Tambah Barang ke Transaksi</h2>
+            <span class="close-button">&times;</span>
         </div>
         
         <div class="modal-body">
@@ -227,20 +229,19 @@ $header_data = $header_result->fetch_assoc();
         </div>
         
         <div class="modal-actions">
-            <button type="submit" form="dataForm" class="simpan">
+            <button type="submit" form="dataForm" class="btn btn-primary">
                 <i class="fas fa-save"></i> Simpan
             </button>
         </div>
     </div>
 </div>
 
-<!-- Enhanced JavaScript untuk Modal -->
 <script>
     const modal = document.getElementById("dataModal");
     const tambahBtn = document.getElementById("tambahBtn");
     const closeBtn = document.querySelector(".close-button");
     const form = document.getElementById("dataForm");
-    const simpanBtn = document.querySelector(".modal-actions .simpan");
+    const simpanBtn = document.querySelector(".modal-actions .btn-primary");
 
     const openModal = () => {
         form.reset();

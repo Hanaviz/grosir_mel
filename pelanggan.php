@@ -50,8 +50,11 @@ if (isset($_GET['hapus'])) {
 <head>
     <meta charset="UTF-8" />
     <title>Grosir Mel - Pelanggan</title>
-    <link rel="stylesheet" href="stylepel.css" />
+    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="sidebar">
@@ -78,7 +81,9 @@ if (isset($_GET['hapus'])) {
 </div>
 
 <div class="main-content">
-    <h2>DAFTAR PELANGGAN</h2>
+    <header>
+        <h2>DAFTAR PELANGGAN</h2>
+    </header>
     <div class="table-controls">
         <div id="pagination-container" class="pagination-container"></div>
         <input type="text" id="searchInput" placeholder="Cari pelanggan...">
@@ -107,7 +112,7 @@ if (isset($_GET['hapus'])) {
             <td><?= htmlspecialchars($row['alamat_pelanggan']); ?></td>
             <td><?= htmlspecialchars($row['nohp_pelanggan']); ?></td>
             <td class="action-cell">
-                <button class="edit"
+                <button class="btn btn-edit"
                     data-id="<?= htmlspecialchars($row['id_pelanggan']); ?>"
                     data-nama="<?= htmlspecialchars($row['nama_pelanggan']); ?>"
                     data-alamat="<?= htmlspecialchars($row['alamat_pelanggan']); ?>"
@@ -115,7 +120,7 @@ if (isset($_GET['hapus'])) {
                     Edit
                 </button>
                 <a href="pelanggan.php?hapus=<?= htmlspecialchars($row['id_pelanggan']); ?>" onclick="return confirm('Yakin hapus pelanggan ini?')">
-                    <button class="hapus">Hapus</button>
+                    <button class="btn btn-danger">Hapus</button>
                 </a>
             </td>
         </tr>
@@ -129,31 +134,41 @@ if (isset($_GET['hapus'])) {
         ?>
         </tbody>
     </table>
-    <div class="action-buttons" style="text-align: right; margin-top: 10px;">
-        <button class="tambah" id="tambahBtn">Tambah</button>
+    <div class="action-buttons" style="text-align: right; margin-top: 15px;">
+        <button class="btn btn-primary" id="tambahBtn"><i class="fas fa-plus"></i> Tambah Pelanggan</button>
     </div>
 </div>
 
 <div id="dataModal" class="modal">
     <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h2 id="modalTitle">Tambah Pelanggan Baru</h2>
-        <form id="dataForm" method="POST" action="pelanggan.php">
-            <input type="hidden" id="id_pelanggan" name="id_pelanggan">
-            
-            <label for="nama_pelanggan">Nama Pelanggan:</label>
-            <input type="text" id="nama_pelanggan" name="nama_pelanggan" required>
-            
-            <label for="alamat_pelanggan">Alamat:</label>
-            <input type="text" id="alamat_pelanggan" name="alamat_pelanggan" required>
-            
-            <label for="nohp_pelanggan">No. HP:</label>
-            <input type="text" id="nohp_pelanggan" name="nohp_pelanggan" required>
+        <div class="modal-header">
+            <h2 id="modalTitle">Tambah Pelanggan Baru</h2>
+            <span class="close-button">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="dataForm" method="POST" action="pelanggan.php">
+                <input type="hidden" id="id_pelanggan" name="id_pelanggan">
+                
+                <div class="form-group">
+                    <label for="nama_pelanggan">Nama Pelanggan:</label>
+                    <input type="text" id="nama_pelanggan" name="nama_pelanggan" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="alamat_pelanggan">Alamat:</label>
+                    <input type="text" id="alamat_pelanggan" name="alamat_pelanggan" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nohp_pelanggan">No. HP:</label>
+                    <input type="text" id="nohp_pelanggan" name="nohp_pelanggan" required>
+                </div>
 
-            <div class="modal-actions">
-                <button type="submit" class="simpan">Simpan</button>
-            </div>
-        </form>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
     
@@ -187,8 +202,8 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("click", (e) => { if(e.target == modal) modal.style.display = "none"; });
 
     document.getElementById("pelangganTableBody").addEventListener("click", function (event) {
-        if (event.target.classList.contains("edit")) {
-            const button = event.target;
+        if (event.target.classList.contains("btn-edit") || event.target.closest(".btn-edit")) {
+            const button = event.target.closest(".btn-edit");
             // Objek data diperbarui tanpa 'jenis'
             openModal("edit", {
                 id: button.dataset.id,

@@ -3,13 +3,13 @@ include 'koneksi.php';
 
 // Fungsi untuk membuat ID unik dengan prefiks
 function generate_unique_id($koneksi, $prefix, $table, $column) {
-    $prefix_len = strlen($prefix) + 1; // Panjang prefiks + underscore
+    $prefix_len = strlen($prefix) + 1;
     // KODE YANG BENAR
 $query = "SELECT $column FROM $table WHERE $column LIKE '$prefix\_%' ORDER BY CAST(SUBSTRING($column, $prefix_len + 1) AS UNSIGNED) DESC LIMIT 1";
     $result = $koneksi->query($query);
     if ($result->num_rows > 0) {
         $last_id = $result->fetch_assoc()[$column];
-        $last_num = (int)substr($last_id, $prefix_len );
+        $last_num = (int)substr($last_id, $prefix_len);
         $new_num = $last_num + 1;
     } else {
         $new_num = 1;
@@ -69,193 +69,9 @@ if (isset($_GET['hapus'])) {
 <head>
     <meta charset="UTF-8" />
     <title>Grosir Mel - Barang</title>
-    <link rel="stylesheet" href="stylebar.css" />
+    <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
-    <style>
-        /* Card & shadow for main content */
-        .main-content {
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(56,73,110,0.10);
-            padding: 32px 32px 24px 32px;
-            margin: 40px 0 40px 270px;
-            min-height: 80vh;
-            transition: box-shadow 0.3s;
-        }
-        .main-content:hover {
-            box-shadow: 0 12px 40px rgba(56,73,110,0.18);
-        }
-        h2 {
-            font-weight: 700;
-            color: #38496E;
-            margin-bottom: 18px;
-            letter-spacing: 1px;
-        }
-        table {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(56,73,110,0.07);
-            overflow: hidden;
-        }
-        table th, table td {
-            padding: 14px 12px;
-            text-align: left;
-        }
-        table thead tr {
-            background: linear-gradient(to right, #38496E, #4A608F);
-            color: #fff;
-        }
-        table tbody tr {
-            transition: background 0.2s;
-        }
-        table tbody tr:hover {
-            background: #f1f5fa;
-        }
-        .action-buttons {
-            margin-top: 18px;
-        }
-        .tambah {
-            background: linear-gradient(to right, #28A745, #218838);
-            color: #fff;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 28px;
-            font-size: 16px;
-            box-shadow: 0 2px 8px rgba(40,167,69,0.10);
-            transition: background 0.2s, box-shadow 0.2s;
-        }
-        .tambah:hover {
-            background: linear-gradient(to right, #218838, #28A745);
-            box-shadow: 0 4px 16px rgba(40,167,69,0.18);
-        }
-        .edit, .hapus {
-            border: none;
-            border-radius: 6px;
-            padding: 7px 18px;
-            font-size: 15px;
-            font-weight: 500;
-            margin-right: 6px;
-            transition: background 0.2s, color 0.2s;
-        }
-        .edit {
-            background: #FFC107;
-            color: #fff;
-        }
-        .edit:hover {
-            background: #e0a800;
-        }
-        .hapus {
-            background: #DC3545;
-            color: #fff;
-        }
-        .hapus:hover {
-            background: #b52a37;
-        }
-        /* Modal improvement */
-        .modal {
-            background: rgba(56,73,110,0.18);
-            z-index: 1000;
-        }
-        .modal-content {
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(56,73,110,0.18);
-            padding: 32px 32px 24px 32px;
-            background: #fff;
-            min-width: 350px;
-            max-width: 400px;
-            margin: auto;
-            animation: fadeIn 0.3s;
-        }
-        .modal-content h2 {
-            color: #38496E;
-            font-weight: 700;
-            margin-bottom: 18px;
-        }
-        .modal-content label {
-            font-weight: 600;
-            color: #38496E;
-        }
-        .modal-content input[type="text"],
-        .modal-content input[type="number"] {
-            border-radius: 7px;
-            border: 1px solid #DEDEDE;
-            padding: 10px 14px;
-            margin-bottom: 14px;
-            font-size: 15px;
-            width: 100%;
-            background: #f8f9fa;
-            transition: border 0.2s;
-        }
-        .modal-content input:focus {
-            border: 1.5px solid #38496E;
-            background: #fff;
-        }
-        .modal-actions {
-            text-align: right;
-        }
-        .simpan {
-            background: linear-gradient(to right, #38496E, #4A608F);
-            color: #fff;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 28px;
-            font-size: 16px;
-            margin-top: 10px;
-            transition: background 0.2s;
-        }
-        .simpan:hover {
-            background: linear-gradient(to right, #2D3A55, #38496E);
-        }
-        .close-button {
-            color: #38496E;
-            font-size: 24px;
-            font-weight: 700;
-            position: absolute;
-            right: 24px;
-            top: 18px;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .close-button:hover {
-            color: #DC3545;
-        }
-        /* Notification */
-        .notif {
-            padding: 14px 20px;
-            border-radius: 8px;
-            margin-bottom: 18px;
-            font-weight: 600;
-            font-size: 15px;
-            box-shadow: 0 2px 8px rgba(56,73,110,0.07);
-        }
-        .notif.success {
-            background: #e6f9ed;
-            color: #218838;
-            border: 1px solid #28A745;
-        }
-        .notif.error {
-            background: #fbeaea;
-            color: #DC3545;
-            border: 1px solid #DC3545;
-        }
-        @media (max-width: 900px) {
-            .main-content {
-                margin: 24px 8px 24px 8px;
-                padding: 18px 6px 12px 6px;
-            }
-            .modal-content {
-                min-width: 90vw;
-                max-width: 98vw;
-            }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
 </head>
 <body>
 <div class="sidebar">
@@ -283,21 +99,20 @@ if (isset($_GET['hapus'])) {
 
 <div class="main-content">
     <div class="header">
-        <div class="header-title" style="font-size: 28px; font-weight: 700; color: #38496E; margin-bottom: 8px;">Barang</div>
+        <div class="header-title">Barang</div>
     </div>
 
     <?php if (isset($_GET['success']) && $_GET['success'] == 'deleted'): ?>
-        <div class="notif success"><i class="fas fa-check-circle"></i> Data barang berhasil dihapus.</div>
+        <div class="alert-box success"><i class="fas fa-check-circle"></i> Data barang berhasil dihapus.</div>
     <?php elseif (isset($_GET['error']) && $_GET['error'] == 'in_use'): ?>
-        <div class="notif error"><i class="fas fa-exclamation-triangle"></i> Barang tidak dapat dihapus karena sudah pernah digunakan dalam transaksi.</div>
+        <div class="alert-box danger"><i class="fas fa-exclamation-triangle"></i> Barang tidak dapat dihapus karena sudah pernah digunakan dalam transaksi.</div>
     <?php endif; ?>
 
-    <h2>DAFTAR BARANG</h2>
     <div class="table-controls">
         <div id="pagination-container" class="pagination-container"></div>
         <input type="text" id="searchInput" placeholder="Cari barang...">
     </div>
-    <div style="overflow-x:auto; border-radius: 10px;">
+    <div style="overflow-x:auto; border-radius: var(--border-radius-md);">
     <table>
         <thead>
             <tr>
@@ -324,8 +139,8 @@ if (isset($_GET['hapus'])) {
             <td>Rp <?= number_format($row['harga_satuan']); ?></td>
             <td><?= htmlspecialchars($row['satuan']); ?></td>
             <td><?= htmlspecialchars($row['stok'] ?? 0); ?></td>
-            <td>
-                <button class="edit" 
+            <td class="action-cell">
+                <button class="btn btn-edit"
                     data-id="<?= htmlspecialchars($row['id_barang']); ?>"
                     data-nama="<?= htmlspecialchars($row['nama_barang']); ?>"
                     data-kategori="<?= htmlspecialchars($row['kategori_barang']); ?>"
@@ -334,7 +149,7 @@ if (isset($_GET['hapus'])) {
                     <i class="fas fa-pen"></i> Edit
                 </button>
                 <a href="barang.php?hapus=<?= htmlspecialchars($row['id_barang']); ?>" onclick="return confirm('Yakin ingin menghapus data ini?')">
-                    <button class="hapus"><i class="fas fa-trash"></i> Hapus</button>
+                    <button class="btn btn-danger"><i class="fas fa-trash"></i> Hapus</button>
                 </a>
             </td>
         </tr>
@@ -349,29 +164,41 @@ if (isset($_GET['hapus'])) {
         </tbody>
     </table>
     </div>
-    <div class="action-buttons" style="text-align: right; margin-top: 10px;">
-        <button class="tambah" id="tambahBtn"><i class="fas fa-plus"></i> Tambah</button>
+    <div class="action-buttons" style="text-align: right; margin-top: 15px;">
+        <button class="btn btn-primary" id="tambahBtn"><i class="fas fa-plus"></i> Tambah Barang</button>
     </div>
 </div>
 
 <div id="barangModal" class="modal">
-    <div class="modal-content" style="position:relative;">
-        <span class="close-button">&times;</span>
-        <h2 id="modalTitle">Tambah Barang Baru</h2>
-        <form id="barangForm" method="POST" action="barang.php">
-            <input type="hidden" id="id_barang" name="id_barang">
-            <label for="nama_barang">Nama Barang:</label>
-            <input type="text" id="nama_barang" name="nama_barang" required>
-            <label for="kategori_barang">Kategori Barang:</label>
-            <input type="text" id="kategori_barang" name="kategori_barang" required>
-            <label for="harga_satuan">Harga Satuan:</label>
-            <input type="number" id="harga_satuan" name="harga_satuan" min="0" required>
-            <label for="satuan">Jenis Satuan:</label>
-            <input type="text" id="satuan" name="satuan" placeholder="Contoh: Pcs, Lusin, Karton" required>
-            <div class="modal-actions">
-                <button type="submit" class="simpan"><i class="fas fa-save"></i> Simpan</button>
-            </div>
-        </form>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Tambah Barang Baru</h2>
+            <span class="close-button">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="barangForm" method="POST" action="barang.php">
+                <input type="hidden" id="id_barang" name="id_barang">
+                <div class="form-group">
+                    <label for="nama_barang">Nama Barang:</label>
+                    <input type="text" id="nama_barang" name="nama_barang" required>
+                </div>
+                <div class="form-group">
+                    <label for="kategori_barang">Kategori Barang:</label>
+                    <input type="text" id="kategori_barang" name="kategori_barang" required>
+                </div>
+                <div class="form-group">
+                    <label for="harga_satuan">Harga Satuan:</label>
+                    <input type="number" id="harga_satuan" name="harga_satuan" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="satuan">Jenis Satuan:</label>
+                    <input type="text" id="satuan" name="satuan" placeholder="Contoh: Pcs, Lusin, Karton" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
     
@@ -403,8 +230,8 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("click", (e) => { if (e.target === modal) modal.style.display = "none"; });
 
     document.getElementById("barangTableBody").addEventListener("click", (event) => {
-        if (event.target.classList.contains("edit") || event.target.closest(".edit")) {
-            const button = event.target.closest(".edit");
+        if (event.target.classList.contains("btn-edit") || event.target.closest(".btn-edit")) {
+            const button = event.target.closest(".btn-edit");
             openModal("edit", {
                 id: button.dataset.id,
                 nama: button.dataset.nama,

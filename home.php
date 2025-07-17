@@ -225,7 +225,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link rel="stylesheet" href="styledis.css" />
+    <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
@@ -298,7 +298,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
                 <h3>Transaksi Terbaru</h3>
                 <div class="header-actions">
                     <button id="btnPemasukan" class="btn btn-success"><i class="fas fa-dolly"></i> Buat Pemasukan</button>
-                    <button id="btnPenjualan" class="btn" style="background-color: #9b59b6; color: white;"><i class="fas fa-shopping-cart"></i> Buat Penjualan</button>
+                    <button id="btnPenjualan" class="btn btn-purple"><i class="fas fa-shopping-cart"></i> Buat Penjualan</button>
                 </div>
             </div>
             <div class="content-table">
@@ -330,7 +330,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
                             <td><?= htmlspecialchars(date('d M Y', strtotime($row['tanggal']))); ?></td>
                             <td><?= htmlspecialchars($row['nama_pelanggan'] ?? 'N/A'); ?></td>
                             <td><?= htmlspecialchars($row['nama_distributor'] ?? 'N/A'); ?></td>
-                            <td style="display: flex; gap: 5px;">
+                            <td class="action-cell">
     <a href="d_transaksi.php?id=<?= $row['id_transaksi']; ?>">
         <button class="btn btn-primary" title="Lihat Detail"><i class="fas fa-eye"></i> Detail</button>
     </a>
@@ -344,7 +344,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
                     else:
                     ?>
                         <tr>
-                           <td colspan="5" style="text-align: center; padding: 20px;">Belum ada data transaksi.</td>
+                           <td colspan="5" class="no-data-row">Belum ada data transaksi.</td>
                         </tr>
                     <?php
                     endif;
@@ -412,7 +412,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="2" style="text-align: center; font-style: italic;">Tidak ada data penjualan untuk periode ini.</td>
+                                    <td colspan="2" class="no-data-row">Tidak ada data penjualan untuk periode ini.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
@@ -485,7 +485,7 @@ $inboundChartDataJson = json_encode($inboundChartData);
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="2" style="text-align: center; font-style: italic;">Tidak ada data pemasukan untuk periode ini.</td>
+                                    <td colspan="2" class="no-data-row">Tidak ada data pemasukan untuk periode ini.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
@@ -502,77 +502,82 @@ $inboundChartDataJson = json_encode($inboundChartData);
         </div>
     </div>
 
-    <!-- Enhanced Modal HTML - Replace the existing modal sections in your home.php -->
-
-<!-- Enhanced Pemasukan Modal -->
-<div id="pemasukanModal" class="modal">
+    <div id="pemasukanModal" class="modal">
     <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h2>
-            <i class="fas fa-dolly"></i> 
-            Buat Transaksi Pemasukan
-        </h2>
-        <form id="pemasukanForm" action="buat_transaksi.php" method="GET">
-            <div class="form-section">
-                <label for="distributor_id">
-                    <i class="fas fa-truck" style="margin-right: 8px; color: #4A608F;"></i>
-                    Pilih Distributor
-                </label>
-                <select name="id_distributor" id="distributor_id" required>
-                    <option value="">-- Pilih Distributor --</option>
-                    <?php
-                    // Re-open connection if closed
-                    if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
-                    $distributor_res = $koneksi->query("SELECT id_distributor, nama_distributor FROM Distributor ORDER BY nama_distributor");
-                    while($dist = $distributor_res->fetch_assoc()) {
-                        echo "<option value='".htmlspecialchars($dist['id_distributor'])."'>".htmlspecialchars($dist['nama_distributor'])."</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="modal-actions">
-                <button type="submit" class="btn btn-success">
-                    <i class="fas fa-arrow-right"></i>
-                    Lanjutkan
-                </button>
-            </div>
-        </form>
+        <div class="modal-header">
+            <h2>
+                <i class="fas fa-dolly"></i> 
+                Buat Transaksi Pemasukan
+            </h2>
+            <span class="close-button">&times;</span>
+        </div>
+        
+        <div class="modal-body">
+            <form id="pemasukanForm" action="buat_transaksi.php" method="GET">
+                <div class="form-group">
+                    <label for="distributor_id">
+                        <i class="fas fa-truck" style="margin-right: 8px; color: #4A608F;"></i>
+                        Pilih Distributor
+                    </label>
+                    <select name="id_distributor" id="distributor_id" required>
+                        <option value="">-- Pilih Distributor --</option>
+                        <?php
+                        // Re-open connection if closed
+                        if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
+                        $distributor_res = $koneksi->query("SELECT id_distributor, nama_distributor FROM Distributor ORDER BY nama_distributor");
+                        while($dist = $distributor_res->fetch_assoc()) {
+                            echo "<option value='".htmlspecialchars($dist['id_distributor'])."'>".htmlspecialchars($dist['nama_distributor'])."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-arrow-right"></i>
+                        Lanjutkan
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<!-- Enhanced Penjualan Modal -->
 <div id="penjualanModal" class="modal">
     <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h2>
-            <i class="fas fa-shopping-cart"></i> 
-            Buat Transaksi Penjualan
-        </h2>
-        <form id="penjualanForm" action="buat_transaksi.php" method="GET">
-            <div class="form-section">
-                <label for="pelanggan_id">
-                    <i class="fas fa-user-friends" style="margin-right: 8px; color: #9b59b6;"></i>
-                    Pilih Pelanggan
-                </label>
-                <select name="id_pelanggan" id="pelanggan_id" required>
-                    <option value="">-- Pilih Pelanggan --</option>
-                    <?php
-                    // Re-open connection if closed
-                    if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
-                    $pelanggan_res = $koneksi->query("SELECT id_pelanggan, nama_pelanggan FROM Pelanggan ORDER BY nama_pelanggan");
-                    while($pel = $pelanggan_res->fetch_assoc()) {
-                        echo "<option value='".htmlspecialchars($pel['id_pelanggan'])."'>".htmlspecialchars($pel['nama_pelanggan'])."</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="modal-actions">
-                <button type="submit" class="btn">
-                    <i class="fas fa-arrow-right"></i>
-                    Lanjutkan
-                </button>
-            </div>
-        </form>
+        <div class="modal-header">
+            <h2>
+                <i class="fas fa-shopping-cart"></i> 
+                Buat Transaksi Penjualan
+            </h2>
+            <span class="close-button">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="penjualanForm" action="buat_transaksi.php" method="GET">
+                <div class="form-group">
+                    <label for="pelanggan_id">
+                        <i class="fas fa-user-friends" style="margin-right: 8px; color: #9b59b6;"></i>
+                        Pilih Pelanggan
+                    </label>
+                    <select name="id_pelanggan" id="pelanggan_id" required>
+                        <option value="">-- Pilih Pelanggan --</option>
+                        <?php
+                        // Re-open connection if closed
+                        if (!$koneksi || $koneksi->connect_error) { include 'koneksi.php'; }
+                        $pelanggan_res = $koneksi->query("SELECT id_pelanggan, nama_pelanggan FROM Pelanggan ORDER BY nama_pelanggan");
+                        while($pel = $pelanggan_res->fetch_assoc()) {
+                            echo "<option value='".htmlspecialchars($pel['id_pelanggan'])."'>".htmlspecialchars($pel['nama_pelanggan'])."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-purple">
+                        <i class="fas fa-arrow-right"></i>
+                        Lanjutkan
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

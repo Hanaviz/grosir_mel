@@ -1,0 +1,819 @@
+/* --- Global Styles & Resets --- */
+html, body { /* Added for full viewport height */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif; /* Consistent font */
+  color: var(--text-color);
+  background-color: var(--secondary-color);
+}
+
+:root {
+  --primary-gradient: linear-gradient(to right, #38496E, #4A608F); /* Deep professional blue gradient */
+  --primary-gradient-hover: linear-gradient(to right, #2D3A55, #38496E); /* Darker gradient for hover */
+  --secondary-color: #F8F9FA; /* Very light grey background */
+  --dark-color: #343A40; /* Darker text/heading color */
+  --light-color: #FFFFFF; /* Pure white */
+  --text-color: #6C757D; /* Softer grey for body text */
+  --success-color: #28A745; /* Standard green */
+  --danger-color: #DC3545; /* Standard red */
+  --edit-color: #FFC107; /* Standard yellow/orange */
+  --info-color: #17A2B8; /* For details/info like print button */
+
+  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+  --border-radius-sm: 5px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 15px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- Main Layout (Sidebar & Content) --- */
+.container { /* From styledis.css */
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar { /* From styledis.css */
+  width: 250px;
+  background: var(--primary-gradient);
+  color: var(--light-color);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  box-shadow: var(--shadow-md);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+.sidebar-header { /* From styledis.css */
+  padding: 25px 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h1 { /* From styledis.css */
+  font-weight: 700;
+  font-size: 26px;
+}
+
+.sidebar-menu { /* From styledis.css */
+  list-style: none;
+  flex-grow: 1;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.sidebar-menu li a { /* From styledis.css */
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  font-weight: 500;
+  margin: 5px 10px;
+  border-radius: var(--border-radius-sm);
+}
+
+.sidebar-menu li a i { /* From styledis.css */
+  margin-right: 15px;
+  font-size: 19px;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar-menu li a:hover { /* From styledis.css */
+  background: var(--primary-gradient-hover);
+  color: var(--light-color);
+  transform: translateX(5px);
+}
+
+.sidebar-menu li.active a { /* From styledis.css */
+  background-color: var(--light-color);
+  color: #38496E;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.main-content { /* Combined from styledis.css and barang.php specific content styles */
+  flex-grow: 1;
+  padding: 30px; /* Default padding */
+  overflow-y: auto;
+  margin-left: 250px;
+  background: var(--light-color); /* From barang.php for card effect */
+  border-radius: var(--border-radius-md); /* From barang.php */
+  box-shadow: var(--shadow-md); /* From barang.php */
+  margin: 40px 30px 40px 280px; /* Adjusted margin to match barang.php style for 'card' effect and sidebar spacing */
+  min-height: calc(100vh - 80px); /* Adjust min-height based on top/bottom margin */
+  transition: box-shadow 0.3s;
+}
+
+.main-content:hover { /* From barang.php */
+    box-shadow: 0 12px 40px rgba(56,73,110,0.18);
+}
+
+.header { /* From styledis.css */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.header .header-title { /* From styledis.css */
+  color: var(--dark-color);
+  font-weight: 700;
+  font-size: 30px;
+}
+
+h2 { /* Consistent h2 styling */
+    margin-bottom: 25px;
+    color: var(--dark-color);
+    font-weight: 700;
+    font-size: 24px;
+}
+
+/* --- Table Styles --- */
+table { /* Consolidated from multiple files */
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--light-color);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden; /* Ensures rounded corners apply to content */
+}
+
+table thead tr {
+  background: var(--primary-gradient);
+  color: var(--light-color);
+  text-align: left;
+  font-weight: 600;
+}
+
+table th, table td {
+  padding: 18px 20px;
+  vertical-align: middle;
+}
+
+table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+table tbody tr:nth-of-type(even) { /* From styledis.css */
+  background-color: #FDFDFD;
+}
+
+table tbody tr:last-of-type {
+  border-bottom: none;
+}
+
+table tbody tr:hover {
+  background-color: #EBF2F7;
+}
+
+.no-data-row { /* From multiple files */
+  text-align: center;
+  font-style: italic;
+  color: var(--text-color);
+  padding: 20px !important;
+}
+
+/* --- Button Styles --- */
+/* Base button styles - consolidated from all files, leaning on styledis.css's btn */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none; /* For <a> acting as button */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, color 0.3s ease;
+  color: var(--light-color);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Specific button styles */
+.btn-primary { /* For "Simpan", "Detail", "Tambah Distributor" */
+  background: var(--primary-gradient);
+  color: var(--light-color);
+}
+.btn-primary:hover {
+  background: var(--primary-gradient-hover);
+}
+
+.btn-success { /* For "Tambah", "Buat Pemasukan" */
+  background-color: var(--success-color);
+  color: var(--light-color);
+}
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-edit { /* For "Edit" */
+  background-color: var(--edit-color);
+  color: var(--dark-color); /* Changed to dark for better contrast on yellow */
+}
+.btn-edit:hover {
+  background-color: #E0A800;
+}
+
+.btn-danger { /* For "Hapus" */
+  background-color: var(--danger-color);
+}
+.btn-danger:hover {
+  background-color: #C82333;
+}
+
+.btn-purple { /* For "Buat Penjualan" */
+  background-color: #9b59b6;
+  color: white;
+}
+.btn-purple:hover {
+  background-color: #8e44ad;
+}
+
+.btn-gray { /* For "Kembali", "Logout" */
+    background-color: #6C757D;
+    color: var(--light-color);
+}
+.btn-gray:hover {
+    background-color: #2b587a;
+}
+
+.action-cell { /* From stylepel.css */
+  display: flex;
+  flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+  gap: 8px;
+}
+
+/* Modal specific button adjustments */
+.modal-actions { /* From styledis.css */
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #e9ecef;
+}
+
+.modal-actions .btn { /* Override base btn for modal context */
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  min-width: 120px;
+  justify-content: center; /* Center content within button */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-actions .btn-success { /* Specific gradient for modal success button if desired */
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+.modal-actions .btn-success:hover {
+    background: linear-gradient(135deg, #218838 0%, #1aa179 100%);
+}
+.modal-actions .btn-primary { /* Specific gradient for modal primary button if desired (e.g. simpan) */
+    background: var(--primary-gradient);
+}
+.modal-actions .btn-primary:hover {
+    background: var(--primary-gradient-hover);
+}
+
+
+/* --- Modal Styles (Most comprehensive from styledis.css) --- */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  width: 90%;
+  max-width: 500px;
+  padding: 0;
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+.modal-header { /* New wrapper for h2 and close button */
+  background: var(--primary-gradient);
+  color: white;
+  margin: 0;
+  padding: 25px 30px;
+  font-size: 22px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 20px 20px 0 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative; /* For close button absolute positioning */
+}
+
+.modal-header i { /* Icon in modal header */
+  font-size: 24px;
+  opacity: 0.9;
+}
+
+.close-button { /* Consolidated and enhanced close button */
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.close-button:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.modal-body { /* New wrapper for form content */
+  padding: 30px;
+}
+
+/* Form styling inside modal */
+.form-group { /* General form group for labels and inputs */
+  margin-bottom: 25px;
+  position: relative; /* For input icons */
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--dark-color);
+  font-size: 16px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="tel"], /* For phone numbers */
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 15px 18px; /* Slightly more padding */
+  border: 2px solid #e9ecef;
+  border-radius: 12px; /* More rounded */
+  font-size: 16px;
+  background: white;
+  color: var(--dark-color);
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #4A608F;
+  box-shadow: 0 0 0 4px rgba(74, 96, 143, 0.15);
+  transform: translateY(-2px); /* Subtle lift on focus */
+}
+
+/* Select specific styling */
+.form-group select {
+  appearance: none; /* Remove default arrow */
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23666%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276,9 12,15 18,9%27%3e%3c/polyline%3e%3c/svg%3e');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 20px;
+  cursor: pointer;
+}
+
+/* Different styling for penjualan modal */
+#penjualanModal .modal-content h2 { /* Specific color for sales modal */
+  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+}
+
+#penjualanModal .modal-actions .btn { /* Specific color for sales modal button */
+  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+  color: white; /* Ensure text is white for this specific button */
+}
+
+#penjualanModal .modal-actions .btn:hover {
+  background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%);
+}
+
+
+/* --- Animations (from styledis.css) --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(50px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Loading state for buttons */
+.btn.loading { /* General loading state for buttons */
+  position: relative;
+  color: transparent;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* --- Table Controls (Search & Pagination) (from stylepel.css & styledis.css) --- */
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  gap: 15px; /* Spacing between elements */
+}
+
+#searchInput { /* Style for search input */
+  width: 300px;
+  padding: 12px 15px;
+  border: 1px solid #DEDEDE;
+  border-radius: var(--border-radius-sm);
+  font-size: 15px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+#searchInput:focus {
+  outline: none;
+  border-color: #38496E;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.pagination-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  padding: 9px 15px;
+  border: 1px solid #DEDEDE;
+  background-color: var(--light-color);
+  color: #38496E;
+  cursor: pointer;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.page-btn.active {
+  background: var(--primary-gradient);
+  color: var(--light-color);
+  border-color: #38496E;
+}
+.page-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #E9ECEF;
+  color: #ADB5BD;
+}
+.page-btn:hover:not(:disabled) {
+    background-color: #EBF2F7;
+    border-color: #4A608F;
+}
+
+/* --- Home Page Specific Styles --- */
+.stats-grid { /* From home.php / styledis.css */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 35px;
+}
+.stat-card { /* From home.php / styledis.css */
+  background-color: var(--light-color);
+  padding: 28px;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.stat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+.stat-card .icon { /* From home.php / styledis.css */
+  font-size: 36px;
+  padding: 18px;
+  border-radius: var(--border-radius-sm);
+  color: var(--light-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.stat-card .icon.barang { background-color: var(--edit-color); }
+.stat-card .icon.pelanggan { background-color: var(--success-color); }
+.stat-card .icon.distributor { background: var(--primary-gradient); }
+.stat-card .icon.transaksi { background-color: var(--danger-color); }
+
+.stat-card-info h3 { /* From home.php / styledis.css */
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin: 0;
+}
+.stat-card-info p { /* From home.php / styledis.css */
+  font-size: 15px;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.content-header { /* From home.php / styledis.css */
+  margin-bottom: 25px;
+  color: var(--dark-color);
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+}
+.header-actions button { /* From home.php */
+  margin-left: 10px;
+}
+
+/* History Section */
+.history-section { /* From home.php / styledis.css */
+  background-color: var(--light-color);
+  padding: 30px;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  margin-top: 35px;
+}
+.history-section h3 { /* From home.php / styledis.css */
+  margin-bottom: 25px;
+  color: var(--dark-color);
+  font-weight: 700;
+  font-size: 22px;
+}
+.filter-form { /* From home.php / styledis.css */
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+.filter-form label { /* From home.php / styledis.css */
+  font-weight: 500;
+  color: var(--dark-color);
+  font-size: 15px;
+}
+.filter-form input[type="radio"] { /* From home.php / styledis.css */
+  margin-right: 8px;
+  transform: scale(1.2);
+}
+.filter-form input[type="date"],
+.filter-form input[type="month"],
+.filter-form input[type="number"] { /* From home.php / styledis.css */
+  padding: 10px 15px;
+  border: 1px solid #DEDEDE;
+  border-radius: var(--border-radius-sm);
+  font-size: 15px;
+  background-color: #FDFDFD;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.filter-form input:focus { /* From home.php / styledis.css */
+    outline: none;
+    border-color: #38496E;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+.filter-form button { /* From home.php / styledis.css */
+  background: var(--primary-gradient);
+  color: var(--light-color);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+.filter-form button:hover { /* From home.php / styledis.css */
+  background: var(--primary-gradient-hover);
+  transform: translateY(-2px);
+}
+.history-summary { /* From home.php / styledis.css */
+  font-size: 19px;
+  font-weight: 700;
+  text-align: right;
+  margin-top: 25px;
+  color: var(--dark-color);
+}
+
+/* --- Transaksi Page Specific Styles --- */
+.tipe-masuk { /* From transaksi.php / stylebar.css */
+  color: var(--success-color);
+  font-weight: bold;
+}
+.tipe-keluar { /* From transaksi.php / stylebar.css */
+  color: var(--danger-color);
+  font-weight: bold;
+}
+
+/* --- Detail Transaksi (d_transaksi.php) specific styles --- */
+.info-header { /* From d_transaksi.php inline style, moved to CSS */
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm); /* Using a defined shadow variable */
+  margin-bottom: 20px;
+}
+.info-header p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: var(--dark-color);
+}
+.info-header p strong {
+    color: #333;
+}
+
+
+/* Alert Box - from barang.php and d_transaksi.php */
+.alert-box {
+    padding: 14px 20px;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 18px;
+    font-weight: 600;
+    font-size: 15px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.alert-box.success {
+    background: #e6f9ed;
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+.alert-box.danger {
+    background: #fbeaea;
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .main-content {
+        margin: 24px 15px 24px 265px; /* Adjust for sidebar */
+        padding: 20px;
+    }
+    .table-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    #searchInput {
+        width: 100%;
+    }
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        margin: 10px;
+        border-radius: 15px;
+    }
+    .modal-header {
+        padding: 20px 25px;
+        font-size: 20px;
+    }
+    .modal-body {
+        padding: 25px 20px;
+    }
+    .modal-actions {
+        flex-direction: column;
+    }
+    .modal-actions .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 80px; /* Collapse sidebar */
+    }
+    .sidebar-header h1 {
+        font-size: 0; /* Hide text */
+    }
+    .sidebar-menu li a span {
+        display: none; /* Hide menu text */
+    }
+    .sidebar-menu li a i {
+        margin-right: 0;
+        width: auto;
+    }
+    .main-content {
+        margin-left: 90px; /* Adjust content margin */
+    }
+    .header-actions {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+    }
+    .header-actions button {
+        margin-left: 0;
+        width: 100%; /* Make buttons full width in header actions */
+    }
+    .filter-form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        margin: 15px; /* Smaller margins for very small screens */
+        padding: 15px;
+        margin-left: 90px; /* Still keep sidebar offset */
+    }
+    .header .header-title {
+        font-size: 24px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    table th, table td {
+        padding: 12px 10px;
+        font-size: 14px;
+    }
+    .stat-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .stat-card .icon {
+        margin-bottom: 10px;
+    }
+    .modal-content {
+        padding: 15px;
+    }
+    .modal-header {
+        padding: 15px 20px;
+    }
+    .modal-body {
+        padding: 20px 15px;
+    }
+    .modal-actions {
+        padding: 0 15px 15px;
+    }
+}
